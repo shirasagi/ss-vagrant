@@ -79,9 +79,9 @@ bundle exec unicorn_rails -c /home/vagrant/shirasagi/config/unicorn.rb -E produc
 ブラウザで "http://localhost:3000/" にアクセスしてみましょう。
 次のような画面が表示されれば成功です。
 
-| SHIRASAGI TOP                 |
-|-------------------------------|
-| [[images/top-min.png = 400x]] |
+| SHIRASAGI TOP                        |
+|--------------------------------------|
+| ![SHIRASAGI TOP](images/top-min.png) |
 
 ## Vagrant Box の中身
 
