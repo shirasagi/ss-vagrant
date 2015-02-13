@@ -97,7 +97,7 @@ bundle exec unicorn_rails -c /home/vagrant/shirasagi/config/unicorn.rb -E produc
 1. [VirtualBox Download](https://www.virtualbox.org/wiki/Downloads) ページから VirtualBox をダウンロードしてインストールする。
 2. [Vagrant Download](http://www.vagrantup.com/downloads.html) ページから Vagrant をダウンロードしてインストールする。
 3. (Windows の人のみ) [Git for Windows](https://msysgit.github.io/) ページから Git をダウンロードしてインストールする。
-   これは `vagrant up` 時に ssh コマンドが必要になるためで、Git に付属している ssh を用います。
-4. (Windows の人のみ) [Tera Term](http://sourceforge.jp/projects/ttssh2/releases/) などのお好きは SSH クライアントをインストール。
+   これは `vagrant up` 時に ssh コマンドが必要になるためで、Git に付属している ssh を用いるのが一番手っ取り早いのでインストールします。
+4. (Windows の人のみ) [Tera Term](http://sourceforge.jp/projects/ttssh2/releases/) などのお好きな SSH クライアントをインストール。
 
 以上。
