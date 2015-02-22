@@ -13,7 +13,7 @@ SHIRASAGI 開発用の Vagrant Box を公開します。
     $ cat Vagrantfile
     VAGRANTFILE_API_VERSION = "2"
     Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-      config.vm.box = "ss-vagrant"
+      config.vm.box = "ss-vagrant-0.6.0"
       config.vm.box_url = "https://github.com/shirasagi/ss-vagrant/releases/download/v0.6.0/ss-vagrant-virtualbox.box"
       config.vm.network :forwarded_port, guest: 3000, host: 3000
 
@@ -99,5 +99,15 @@ bundle exec unicorn_rails -c /home/vagrant/shirasagi/config/unicorn.rb -E produc
 3. (Windows の人のみ) [Git for Windows](https://msysgit.github.io/) ページから Git をダウンロードしてインストールする。
    これは `vagrant up` 時に ssh コマンドが必要になるためで、Git に付属している ssh を用いるのが一番手っ取り早いのでインストールします。
 4. (Windows の人のみ) [Tera Term](http://sourceforge.jp/projects/ttssh2/releases/) などのお好きな SSH クライアントをインストール。
+
+## Vagrant Box のビルド方法
+
+`packer` を別途インストールしてください。そして、次のコマンドでビルドできます。
+
+    $ cd packer
+    $ packer build -only=virtualbox-iso template.json
+
+ビルドに成功すると `ss-vagrant-virtualbox.box` ができます。
+ビルドには 20 分ぐらいかかります。
 
 以上。
