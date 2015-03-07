@@ -8,6 +8,6 @@ enabled=1
 _EOT_
 
 yum -y install mongodb-org
-sed -i 's/# nojournal=true/nojournal=true/' /etc/mongod.conf
+# sed -i 's/# nojournal=true/nojournal=true/' /etc/mongod.conf
 
 service mongod restart
