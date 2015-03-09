@@ -13,8 +13,8 @@ SHIRASAGI 開発用の Vagrant Box を公開します。
     $ cat Vagrantfile
     VAGRANTFILE_API_VERSION = "2"
     Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-      config.vm.box = "ss-vagrant-0.6.0"
-      config.vm.box_url = "https://github.com/shirasagi/ss-vagrant/releases/download/v0.6.0/ss-vagrant-virtualbox.box"
+      config.vm.box = "ss-vagrant-v0.7.0-SNAPSHOT-20150308-2047"
+      config.vm.box_url = "https://github.com/shirasagi/ss-vagrant/releases/download/v0.7.0-SNAPSHOT-20150308-2047/ss-vagrant-virtualbox.box"
       config.vm.network :forwarded_port, guest: 3000, host: 3000
 
       config.vm.provider :virtualbox do |vb|
