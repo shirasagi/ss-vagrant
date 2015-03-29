@@ -4,3 +4,6 @@ curl -sSL https://get.rvm.io | sudo bash -s stable --ruby=2.2.1
 
 echo "gem: --no-ri --no-rdoc" > /home/vagrant/.gemrc
 chown vagrant:vagrant /home/vagrant/.gemrc
+
+echo "export rvmsudo_secure_path=0" > /etc/profile.d/rvmsudo_secure_path.sh
+sed -ie 's/\(Defaults[\t ][\t ]*secure_path\)/# \1/' /etc/sudoers
