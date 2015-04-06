@@ -2,7 +2,7 @@
   "provisioners": [
     {
       "type": "shell",
-      "execute_command": "echo 'vagrant'|sudo -S sh '{{.Path}}'",
+      "execute_command": "echo 'vagrant'|sudo -S bash '{{.Path}}'",
       "override": {
         "virtualbox-iso": {
           "scripts": [
@@ -31,6 +31,23 @@
             "scripts/base.sh",
             "scripts/vagrant.sh",
             "scripts/vmware.sh",
+            "scripts/rvm-ruby.sh",
+            "scripts/bundler.sh",
+            "scripts/mongo.sh",
+            "scripts/mecab.sh",
+            "scripts/open_jtalk.sh",
+            "scripts/shirasagi.sh",
+            "scripts/disable-firewall.sh",
+            "scripts/disable-ipv6.sh",
+            "scripts/extra-package.sh",
+            "scripts/cleanup.sh"
+          ]
+        },
+        "amazon-ebs": {
+          "scripts": [
+            "scripts/update.sh",
+            "scripts/base.sh",
+            "scripts/aws.sh",
             "scripts/rvm-ruby.sh",
             "scripts/bundler.sh",
             "scripts/mongo.sh",
@@ -107,6 +124,26 @@
         "numvcpus": "1",
         "cpuid.coresPerSocket": "1"
       }
+    },
+    {
+      "type": "amazon-ebs",
+      "region": "ap-northeast-1",
+      "source_ami": "ami-cbf90ecb",
+      "instance_type": "t2.micro",
+      "ssh_username": "ec2-user",
+      "ssh_timeout": "5m",
+      "ami_name": "webtips-shirasagi-handon-ami-{{isotime \"2006-01-02\"}}",
+      "ami_description": "This is SHIRASAGI AMI based on Amazon Linux AMI 2015.03 (HVM), SSD Volume Type (ami-cbf90ecb).",
+      "ami_block_device_mappings": [
+        { "device_name": "/dev/xvda", "volume_size": 15, "volume_type": "gp2", "delete_on_termination": true },
+        { "device_name": "/dev/sdb", "virtual_name": "ephemeral0" },
+        { "device_name": "/dev/sdc", "virtual_name": "ephemeral1" }
+      ],
+      "launch_block_device_mappings": [
+        { "device_name": "/dev/xvda", "volume_size": 15, "volume_type": "gp2", "delete_on_termination": true },
+        { "device_name": "/dev/sdb", "virtual_name": "ephemeral0" },
+        { "device_name": "/dev/sdc", "virtual_name": "ephemeral1" }
+      ]
     }
   ]
 }

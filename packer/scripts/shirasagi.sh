@@ -1,6 +1,6 @@
 yum -y install git wget ImageMagick ImageMagick-devel
 
-cd $HOME && cat << _EOT_ | sudo -u vagrant bash
+cd $HOME && cat << _EOT_ | sudo -u $SUDO_USER bash
 cd \$HOME
 source /etc/profile.d/rvm.sh
 git clone https://github.com/shirasagi/shirasagi
