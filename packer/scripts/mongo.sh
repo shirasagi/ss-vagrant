@@ -1,8 +1,10 @@
+arch=${1:-"x86_64"}
+
 # install mongodb
 cat << _EOT_ > /etc/yum.repos.d/mongodb.repo
 [mongodb]
 name=MongoDB Repository
-baseurl=http://downloads-distro.mongodb.org/repo/redhat/os/x86_64/
+baseurl=http://downloads-distro.mongodb.org/repo/redhat/os/$arch/
 gpgcheck=0
 enabled=1
 _EOT_

@@ -24,6 +24,26 @@
             "scripts/cleanup.sh"
           ]
         },
+        "virtualbox-iso-32": {
+          "scripts": [
+            "scripts/fix-slow-dns.sh",
+            "scripts/update.sh",
+            "scripts/epel.sh",
+            "scripts/base.sh",
+            "scripts/vagrant.sh",
+            "scripts/virtualbox.sh",
+            "scripts/rvm-ruby.sh",
+            "scripts/bundler.sh",
+            "scripts/mongo.sh i686",
+            "scripts/mecab.sh",
+            "scripts/open_jtalk.sh",
+            "scripts/shirasagi.sh",
+            "scripts/disable-firewall.sh",
+            "scripts/disable-ipv6.sh",
+            "scripts/extra-package.sh",
+            "scripts/cleanup.sh"
+          ]
+        },
         "vmware-iso": {
           "scripts": [
             "scripts/update.sh",
@@ -89,6 +109,30 @@
       "iso_checksum": "4ed6c56d365bd3ab12cd88b8a480f4a62e7c66d2",
       "iso_checksum_type": "sha1",
       "iso_url": "http://ftp.iij.ad.jp/pub/linux/centos/6.6/isos/x86_64/CentOS-6.6-x86_64-minimal.iso",
+      "ssh_username": "vagrant",
+      "ssh_password": "vagrant",
+      "ssh_port": 22,
+      "ssh_wait_timeout": "10000s",
+      "shutdown_command": "echo '/sbin/halt -h -p' > /tmp/shutdown.sh; echo 'vagrant'|sudo -S sh '/tmp/shutdown.sh'",
+      "guest_additions_path": "VBoxGuestAdditions_{{.Version}}.iso",
+      "virtualbox_version_file": ".vbox_version",
+      "vboxmanage": [
+        [ "modifyvm", "{{.Name}}", "--memory", "1024" ],
+        [ "modifyvm", "{{.Name}}", "--cpus", "1" ]
+      ]
+    },
+    {
+      "type": "virtualbox-iso-32",
+      "boot_command": [
+        "<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks.cfg<enter><wait>"
+      ],
+      "boot_wait": "10s",
+      "disk_size": 15195,
+      "guest_os_type": "RedHat",
+      "http_directory": "http",
+      "iso_checksum": "6760e2e2a807081731763fcfa680d8413cf24cb7",
+      "iso_checksum_type": "sha1",
+      "iso_url": "http://ftp.iij.ad.jp/pub/linux/centos/6.6/isos/i386/CentOS-6.6-i386-minimal.iso",
       "ssh_username": "vagrant",
       "ssh_password": "vagrant",
       "ssh_port": 22,
