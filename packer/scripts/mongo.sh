@@ -1,7 +1,11 @@
-arch=${1:-"x86_64"}
+arch=${arch:-"x86_64"}
+
+if [ "$arch" == "i386" ]; then
+  arch="i686"
+fi
 
 # install mongodb
-cat << _EOT_ > /etc/yum.repos.d/mongodb.repo
+cat << _EOT_ | tee /etc/yum.repos.d/mongodb.repo
 [mongodb]
 name=MongoDB Repository
 baseurl=http://downloads-distro.mongodb.org/repo/redhat/os/$arch/
@@ -13,4 +17,4 @@ yum -y install mongodb-org
 # sed -i 's/# nojournal=true/nojournal=true/' /etc/mongod.conf
 sed -i 's/bind_ip=/# bind_ip=/' /etc/mongod.conf
 
-service mongod restart
+/sbin/service mongod restart

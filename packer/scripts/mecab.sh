@@ -19,7 +19,7 @@ if [ $? -ne 0 ]; then
 fi
 
 echo "/usr/local/lib" | tee -a /etc/ld.so.conf
-ldconfig
+/sbin/ldconfig
 
 export PATH=$PATH:/usr/local/bin
 

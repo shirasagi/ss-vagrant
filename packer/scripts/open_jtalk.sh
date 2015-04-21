@@ -130,5 +130,5 @@ make install
 
 popd
 
-ldconfig
+/sbin/ldconfig
 

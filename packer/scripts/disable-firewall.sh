@@ -1,2 +1,2 @@
-chkconfig iptables off
-chkconfig ip6tables off
+/sbin/chkconfig iptables off
+/sbin/chkconfig ip6tables off
