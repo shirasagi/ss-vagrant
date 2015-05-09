@@ -13,10 +13,9 @@ SHIRASAGI 開発用の Vagrant Box を公開します。
     $ cat Vagrantfile
     VAGRANTFILE_API_VERSION = "2"
     Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-      config.vm.box = "ss-vagrant-v0.7.0-SNAPSHOT-20150406-1849"
-      config.vm.box_url = "https://github.com/shirasagi/ss-vagrant/releases/download/v0.7.0-SNAPSHOT-20150406-1849/ss-vagrant-virtualbox.box"
+      config.vm.box = "ss-vagrant-v0.7.0-SNAPSHOT-20150509-1144"
+      config.vm.box_url = "https://github.com/shirasagi/ss-vagrant/releases/download/v0.7.0-SNAPSHOT-20150509-1144/ss-vagrant-virtualbox-x86_64.box"
       config.vm.network :forwarded_port, guest: 3000, host: 3000
-      config.vm.network :private_network, ip: "192.168.33.10"
 
       config.vm.provider :virtualbox do |vb|
         # see: http://blog.shibayu36.org/entry/2013/08/12/090545
@@ -90,11 +89,11 @@ bundle exec unicorn_rails -c /home/vagrant/shirasagi/config/unicorn.rb -E produc
 
 ## Vagrant Box の中身
 
-* CentOS 6.6 (2015-04-06 時点での最新)
+* CentOS 6.6 (2015-05-09 時点での最新)
 * MongoDB 2.6.9
-* RVM 1.26.10
-* Ruby 2.2.1p85
-* SHIRASAGI のソース一式 (2015-04-06 時点での最新)
+* RVM 1.26.11
+* Ruby 2.2.2p95
+* SHIRASAGI のソース一式 (2015-05-09 時点での最新)
 
 
 ## Vagrant のインストール方法
@@ -115,7 +114,7 @@ bundle exec unicorn_rails -c /home/vagrant/shirasagi/config/unicorn.rb -E produc
 * (Windows の人のみ) ユーザ名に日本語が含まれる場合、Vagrant が起動しない場合があります。
   環境変数 `VAGRANT_HOME` を日本語を含まないディレクトリに設定し、VirtualBox の設定を変更し、default VM folder を日本語を含まないディレクトリに変更してください。
   参考: [incompatible character encodings: CP850 and Windows-1252](https://github.com/mitchellh/vagrant/issues/3937)
-* 32ビット CPU をご利用の方向けに "https://github.com/shirasagi/ss-vagrant/releases/download/v0.7.0-SNAPSHOT-20150406-1849/ss-vagrant-virtualbox-i386.box" を提供しております。
+* 32ビット CPU をご利用の方向けに "https://github.com/shirasagi/ss-vagrant/releases/download/v0.7.0-SNAPSHOT-20150509-1144/ss-vagrant-virtualbox-i386.box" を提供しております。
   * 64ビット CPU で 32 ビット OS をご利用の方は、64ビット Vagrant Box をご利用いただけます。
   * 64ビット CPU で 64 ビット OS をご利用の方は、64ビット Vagrant Box をご利用ください。
   * 32ビット CPU 向け Vagrant Box は、512 MB のメモリを割り当てています。
