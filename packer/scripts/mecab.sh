@@ -35,10 +35,14 @@ fi
 
 cd /usr/local/src
 tar xvzf mecab-ruby-0.996.tar.gz
-bash -c "source /etc/profile.d/rvm.sh; cd /usr/local/src/mecab-ruby-0.996; ruby extconf.rb; make install"
-#cd mecab-ruby-0.996
-#make
-#make install
+source /etc/profile.d/rvm.sh
+cd /usr/local/src/mecab-ruby-0.996
+ruby extconf.rb
+if [ $? -ne 0 ]; then
+  exit 4
+fi
+
+make install
 if [ $? -ne 0 ]; then
   exit 4
 fi

@@ -13,8 +13,8 @@ SHIRASAGI 開発用の Vagrant Box を公開します。
     $ cat Vagrantfile
     VAGRANTFILE_API_VERSION = "2"
     Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-      config.vm.box = "ss-vagrant-v0.7.0-SNAPSHOT-20150509-1144"
-      config.vm.box_url = "https://github.com/shirasagi/ss-vagrant/releases/download/v0.7.0-SNAPSHOT-20150509-1144/ss-vagrant-virtualbox-x86_64.box"
+      config.vm.box = "ss-vagrant-v0.7.0"
+      config.vm.box_url = "https://github.com/shirasagi/ss-vagrant/releases/download/v0.7.0/ss-vagrant-virtualbox-x86_64.box"
       config.vm.network :forwarded_port, guest: 3000, host: 3000
 
       config.vm.provider :virtualbox do |vb|
@@ -89,11 +89,19 @@ bundle exec unicorn_rails -c /home/vagrant/shirasagi/config/unicorn.rb -E produc
 
 ## Vagrant Box の中身
 
-* CentOS 6.6 (2015-05-09 時点での最新)
-* MongoDB 2.6.9
+64 ビット:
+* CentOS 7.1.1503 (2015-05-23 時点での最新)
+* MongoDB 3.0.3
 * RVM 1.26.11
 * Ruby 2.2.2p95
-* SHIRASAGI のソース一式 (2015-05-09 時点での最新)
+* SHIRASAGI のソース一式 (v0.7.0)
+
+32 ビット:
+* CentOS 6.6 (2015-05-23 時点での最新)
+* MongoDB 2.6.10
+* RVM 1.26.11
+* Ruby 2.2.2p95
+* SHIRASAGI のソース一式 (v0.7.0)
 
 
 ## Vagrant のインストール方法

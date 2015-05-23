@@ -1,9 +1,10 @@
 {
   "variables": {
+    "os": "centos7",
     "guest_os_type": "RedHat_64",
-    "iso_checksum": "4ed6c56d365bd3ab12cd88b8a480f4a62e7c66d2",
+    "iso_url": "http://ftp.iij.ad.jp/pub/linux/centos/7.1.1503/isos/x86_64/CentOS-7-x86_64-Minimal-1503-01.iso",
+    "iso_checksum": "7c1e34e95c991175290d704dbdcc6531774cbecb",
     "iso_checksum_type": "sha1",
-    "iso_url": "http://ftp.iij.ad.jp/pub/linux/centos/6.6/isos/x86_64/CentOS-6.6-x86_64-minimal.iso",
     "memory": "1024",
     "arch": "x86_64"
   },
@@ -12,6 +13,7 @@
       "type": "shell",
       "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S bash '{{.Path}}'",
       "environment_vars": [
+        "os={{user `os`}}",
         "arch={{user `arch`}}"
       ],
       "override": {

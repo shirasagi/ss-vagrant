@@ -6,6 +6,7 @@ source /etc/profile.d/rvm.sh
 git clone https://github.com/shirasagi/shirasagi
 cd shirasagi
 cp -p config/samples/* config/
+sed -i "s/dbcae379.*$/$(rake secret)/" config/secrets.yml
 
 echo "== bundle install"
 for i in \$(seq 1 5)
