@@ -6,7 +6,6 @@ source /etc/profile.d/rvm.sh
 git clone https://github.com/shirasagi/shirasagi
 cd shirasagi
 cp -p config/samples/* config/
-sed -i "s/dbcae379.*$/$(rake secret)/" config/secrets.yml
 
 echo "== bundle install"
 for i in \$(seq 1 5)
@@ -17,10 +16,13 @@ do
   fi
 done
 
+sed -i "s/dbcae379.*$/$(rake secret)/" config/secrets.yml
+
 bundle exec rake db:create_indexes
 bundle exec rake ss:create_user data='{ name: "システム管理者", email: "sys@example.jp", password: "pass" }'
 bundle exec rake ss:create_site data='{ name: "サイト名", host: "www", domains: "localhost:3000" }'
 bundle exec rake db:seed name=users site=www
 bundle exec rake db:seed name=demo site=www
 bundle exec rake cms:generate_nodes site=www
+bundle exec rake cms:generate_pages site=www
 _EOT_
