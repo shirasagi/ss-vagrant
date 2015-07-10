@@ -13,8 +13,8 @@ SHIRASAGI 開発用の Vagrant Box を公開します。
     $ cat Vagrantfile
     VAGRANTFILE_API_VERSION = "2"
     Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-      config.vm.box = "ss-vagrant-v0.7.0"
-      config.vm.box_url = "https://github.com/shirasagi/ss-vagrant/releases/download/v0.7.0/ss-vagrant-virtualbox-x86_64.box"
+      config.vm.box = "ss-vagrant-v0.8.0"
+      config.vm.box_url = "https://github.com/shirasagi/ss-vagrant/releases/download/v0.8.0/ss-vagrant-virtualbox-x86_64.box"
       config.vm.network :forwarded_port, guest: 3000, host: 3000
 
       config.vm.provider :virtualbox do |vb|
@@ -89,24 +89,17 @@ bundle exec unicorn_rails -c /home/vagrant/shirasagi/config/unicorn.rb -E produc
 
 ## Vagrant Box の中身
 
-64 ビット:
+* VirtualBox 4.3.28 対応
 * CentOS 7.1.1503 (2015-05-23 時点での最新)
 * MongoDB 3.0.3
 * RVM 1.26.11
 * Ruby 2.2.2p95
 * SHIRASAGI のソース一式 (v0.7.0)
 
-32 ビット:
-* CentOS 6.6 (2015-05-23 時点での最新)
-* MongoDB 2.6.10
-* RVM 1.26.11
-* Ruby 2.2.2p95
-* SHIRASAGI のソース一式 (v0.7.0)
-
-
 ## Vagrant のインストール方法
 
 1. [VirtualBox Download](https://www.virtualbox.org/wiki/Downloads) ページから VirtualBox をダウンロードしてインストールします。
+   Vagrant が VirtualBox 5.0 に対応していないため 4.3.28 をダウンロードしてインストールしてください。
 2. [Vagrant Download](http://www.vagrantup.com/downloads.html) ページから Vagrant をダウンロードしてインストールします。
 3. (Windows の人のみ) [Git for Windows](https://msysgit.github.io/) ページから Git をダウンロードしてインストールします。
    これは `vagrant up` 時に ssh コマンドが必要になるためで、Git に付属している ssh を用いるのが一番手っ取り早いのでインストールします。
@@ -139,5 +132,15 @@ bundle exec unicorn_rails -c /home/vagrant/shirasagi/config/unicorn.rb -E produc
 
 ビルドに成功すると `ss-vagrant-virtualbox-x86_64.box` ができます。
 ビルドには 20 分ぐらいかかります。
+
+## 32 ビット版
+
+GitHub には、合計 1GB までしかファイルをアップできないため、32 ビット版の提供を取りやめました。
+32 ビット版の Vagrant Box が必要な方は、ご自身でビルドしてください。
+
+`packer` を別途インストールしてください。そして、次のコマンドでビルドできます。
+
+    $ cd packer
+    $ packer build -only=virtualbox-iso -var-file=virtualbox-i386-variables.json template.json
 
 以上。

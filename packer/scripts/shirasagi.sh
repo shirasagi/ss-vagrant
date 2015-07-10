@@ -5,7 +5,7 @@ cd \$HOME
 source /etc/profile.d/rvm.sh
 git clone https://github.com/shirasagi/shirasagi
 cd shirasagi
-cp -p config/samples/* config/
+cp -np config/samples/*.{yml,rb} config/
 
 echo "== bundle install"
 for i in \$(seq 1 5)
@@ -25,4 +25,6 @@ bundle exec rake db:seed name=users site=www
 bundle exec rake db:seed name=demo site=www
 bundle exec rake cms:generate_nodes site=www
 bundle exec rake cms:generate_pages site=www
+
+bin/deploy
 _EOT_

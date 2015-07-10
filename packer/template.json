@@ -34,7 +34,8 @@
             "scripts/disable-firewall.sh",
             "scripts/disable-ipv6.sh",
             "scripts/extra-package.sh",
-            "scripts/cleanup.sh"
+            "scripts/cleanup.sh",
+            "scripts/zerodisk.sh"
           ]
         },
         "vmware-iso": {
@@ -53,7 +54,8 @@
             "scripts/disable-firewall.sh",
             "scripts/disable-ipv6.sh",
             "scripts/extra-package.sh",
-            "scripts/cleanup.sh"
+            "scripts/cleanup.sh",
+            "scripts/zerodisk.sh"
           ]
         },
         "amazon-ebs": {
