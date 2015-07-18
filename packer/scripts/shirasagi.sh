@@ -16,7 +16,7 @@ do
   fi
 done
 
-sed -i "s/dbcae379.*$/$(rake secret)/" config/secrets.yml
+sed -i "s/dbcae379.*$/\$(rake secret)/" config/secrets.yml
 
 bundle exec rake db:create_indexes
 bundle exec rake ss:create_user data='{ name: "システム管理者", email: "sys@example.jp", password: "pass" }'
