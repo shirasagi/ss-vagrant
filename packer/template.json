@@ -5,7 +5,7 @@
     "iso_url": "http://ftp.iij.ad.jp/pub/linux/centos/7.1.1503/isos/x86_64/CentOS-7-x86_64-Minimal-1503-01.iso",
     "iso_checksum": "7c1e34e95c991175290d704dbdcc6531774cbecb",
     "iso_checksum_type": "sha1",
-    "memory": "1024",
+    "memory": "1536",
     "arch": "x86_64"
   },
   "provisioners": [

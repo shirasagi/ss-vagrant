@@ -5,6 +5,7 @@ cd \$HOME
 source /etc/profile.d/rvm.sh
 git clone https://github.com/shirasagi/shirasagi
 cd shirasagi
+git checkout -b v0.9.5 origin/v0.9.5
 cp -np config/samples/*.{yml,rb} config/
 
 echo "== bundle install"
