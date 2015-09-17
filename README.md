@@ -37,7 +37,7 @@ Windows の方は、別途 Git をインストールし git-bash から上記コ
 もし、`vagrant up` が失敗する場合、次の点を確認して下さい。
   * Intel VT/AMD-V が有効になっている。
   * ユーザ名はアルファベット、数字、ハイフン、アンダーバーのみを含む。
-  * [Vagrant が起動しない場合](#user-content-Vagrant-が起動しない場合)に詳しく書いています。
+  * [Vagrant が起動しない場合](#user-content-vagrant-が起動しない場合)に詳しく書いています。
 
 起動したら次のコマンドでログインしてください。
 
@@ -109,15 +109,15 @@ bundle exec unicorn_rails -c /home/vagrant/shirasagi/config/unicorn.rb -E produc
 
 ### Vagrant が起動しない場合
 
+* (Mac の人のみ) Intel ベースの Mac では、Intel VT は有効になっていますが、もし使用できない場合は https://support.apple.com/ja-jp/TS2744 を参照してください。
 * (Windows の人のみ) お使いのパソコンが Intel VT/AMD-V に対応しているかどうかを確認します。
   [VirtualChecker](http://www.forest.impress.co.jp/library/software/virtualcheck/) をダウンロードし、実行してください。
   Enabled と表示されれば Intel VT/AMD-V が有効になっており、Vagrant を使用することができます。
   Disabled と表示された場合、BIOS の設定を確認し Intel VT/AMD-V を有効にすることで Vagrant を使うことが出来ます。
-* (Mac の人のみ) Intel ベースの Mac では、Intel VT は有効になっていますが、もし使用できない場合は https://support.apple.com/ja-jp/TS2744 を参照してください。
 * (Windows の人のみ) ユーザ名に日本語が含まれる場合、Vagrant が起動しない場合があります。
   環境変数 `VAGRANT_HOME` を日本語を含まないディレクトリに設定し、VirtualBox の設定を変更し、default VM folder を日本語を含まないディレクトリに変更してください。
   参考: [incompatible character encodings: CP850 and Windows-1252](https://github.com/mitchellh/vagrant/issues/3937)
-* 32ビット版 Windows をご利用の方
+* (Windows の人のみ) 32ビット版 Windows をご利用の方
   * 64ビット CPU で 32ビット版 Windows をご利用の方は、64ビット Vagrant Box をご利用いただけます。
   * 32ビット CPU で 32ビット版 Windows をご利用の方は、すみませんが、以下の方法で、独自に Vagrant Box をビルドしていただくか、
     [SHIRASAGI 開発マニュアル](http://shirasagi.github.io/)の[手動インストール](http://shirasagi.github.io/installation/manual.html)を参考に、
