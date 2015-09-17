@@ -3,8 +3,10 @@ SHIRASAGI Vagrant
 
 SHIRASAGI 開発用の Vagrant Box を公開します。
 
-
 ## 使用方法
+
+Vagrant をインストールしていない人は、先に[Vagrant のインストール](#user-content-vagrant-のインストール方法) を参照して、
+VirtualBox と Vagrant をインストールしてください。
 
 適当なディレクトリを作成し、次のような内容を持つ `Vagrantfile` を作成してください。
 
@@ -115,13 +117,11 @@ bundle exec unicorn_rails -c /home/vagrant/shirasagi/config/unicorn.rb -E produc
 * (Windows の人のみ) ユーザ名に日本語が含まれる場合、Vagrant が起動しない場合があります。
   環境変数 `VAGRANT_HOME` を日本語を含まないディレクトリに設定し、VirtualBox の設定を変更し、default VM folder を日本語を含まないディレクトリに変更してください。
   参考: [incompatible character encodings: CP850 and Windows-1252](https://github.com/mitchellh/vagrant/issues/3937)
-* 32ビット CPU をご利用の方向けに "https://github.com/shirasagi/ss-vagrant/releases/download/v0.7.0-SNAPSHOT-20150509-1144/ss-vagrant-virtualbox-i386.box" を提供しております。
-  * 64ビット CPU で 32 ビット OS をご利用の方は、64ビット Vagrant Box をご利用いただけます。
-  * 64ビット CPU で 64 ビット OS をご利用の方は、64ビット Vagrant Box をご利用ください。
-  * 32ビット CPU 向け Vagrant Box は、512 MB のメモリを割り当てています。
-    512 MB のメモリではまれにスワップする場合があります。
-    もしスワップするようであれば、割り当てメモリを増やしてください。
-  * 最新版の CentOS 7 から　32 ビットのサポートが削除されたため、32 ビット Vagrant Box はやむなく提供を中止する場合があります。
+* 32ビット版 Windows をご利用の方
+  * 64ビット CPU で 32ビット版 Windows をご利用の方は、64ビット Vagrant Box をご利用いただけます。
+  * 32ビット CPU で 32ビット版 Windows をご利用の方は、すみませんが、以下の方法で、独自に Vagrant Box をビルドしていただくか、
+    [SHIRASAGI 開発マニュアル](http://shirasagi.github.io/)の[手動インストール](http://shirasagi.github.io/installation/manual.html)を参考に、
+    手動でインストールしてください。
 
 ## Vagrant Box のビルド方法
 
