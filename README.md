@@ -15,8 +15,8 @@ VirtualBox と Vagrant をインストールしてください。
     $ cat Vagrantfile
     VAGRANTFILE_API_VERSION = "2"
     Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-      config.vm.box = "ss-vagrant-v1.0.0"
-      config.vm.box_url = "https://github.com/shirasagi/ss-vagrant/releases/download/v1.0.0/ss-vagrant-virtualbox-x86_64.box"
+      config.vm.box = "ss-vagrant-v1.0.2"
+      config.vm.box_url = "https://github.com/shirasagi/ss-vagrant/releases/download/v1.0.2/ss-vagrant-virtualbox-x86_64.box"
       config.vm.network :forwarded_port, guest: 3000, host: 3000
 
       config.vm.provider :virtualbox do |vb|
@@ -92,12 +92,12 @@ bundle exec unicorn_rails -c /home/vagrant/shirasagi/config/unicorn.rb -E produc
 
 ## Vagrant Box の中身
 
-* VirtualBox 5.0.0 対応
-* CentOS 7.1.1503 (2015-11-14 時点での最新)
-* MongoDB 3.0.7
+* VirtualBox 5.0.14 r105127 Guest Addition
+* CentOS 7.2.1511 (2016-03-02 時点での最新)
+* MongoDB 3.0.9
 * RVM 1.26.11
-* Ruby 2.2.3p173
-* SHIRASAGI のソース一式 (v1.0.0)
+* Ruby 2.3.0p0
+* SHIRASAGI のソース一式 (v1.0.2)
 
 ## Vagrant のインストール方法
 
