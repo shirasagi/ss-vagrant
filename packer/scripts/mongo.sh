@@ -9,10 +9,10 @@ gpgcheck=0
 enabled=1
 _EOT_
 else
-cat << _EOT_ | tee /etc/yum.repos.d/mongodb-org-3.0.repo
-[mongodb-org-3.0]
+cat << _EOT_ | tee /etc/yum.repos.d/mongodb-org-3.2.repo
+[mongodb-org-3.2]
 name=MongoDB Repository
-baseurl=http://repo.mongodb.org/yum/redhat/\$releasever/mongodb-org/3.0/x86_64/
+baseurl=https://repo.mongodb.org/yum/redhat/\$releasever/mongodb-org/3.2/x86_64/
 gpgcheck=0
 enabled=1
 _EOT_
