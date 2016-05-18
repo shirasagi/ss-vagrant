@@ -15,9 +15,10 @@ VirtualBox と Vagrant をインストールしてください。
     $ cat Vagrantfile
     VAGRANTFILE_API_VERSION = "2"
     Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-      config.vm.box = "ss-vagrant-v1.1.0"
-      config.vm.box_url = "https://github.com/shirasagi/ss-vagrant/releases/download/v1.1.0/ss-vagrant-virtualbox-x86_64.box"
+      config.vm.box = "ss-vagrant-v1.1.1"
+      config.vm.box_url = "https://github.com/shirasagi/ss-vagrant/releases/download/v1.1.1/ss-vagrant-virtualbox-x86_64.box"
       config.vm.network :forwarded_port, guest: 3000, host: 3000
+      config.vm.network "private_network", ip: "192.168.33.10"
 
       config.vm.provider :virtualbox do |vb|
         # see: http://blog.shibayu36.org/entry/2013/08/12/090545
