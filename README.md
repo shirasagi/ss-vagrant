@@ -91,6 +91,15 @@ bundle exec unicorn_rails -c /home/vagrant/shirasagi/config/unicorn.rb -E produc
 |--------------------------------------|
 | ![SHIRASAGI TOP](images/top-min.png) |
 
+また、"http://192.168.33.10:3000/" にアクセスしてみてください。
+企業サンプルサイトの画面が表示されるはずです。
+
+| COMPANY TOP                              |
+|------------------------------------------|
+| ![SHIRASAGI TOP](images/top-company.png) |
+
+管理画面は http://localhost:3000/.mypage からアクセスできます。
+
 ## Vagrant Box の中身
 
 * VirtualBox 5.0.16 r105871 Guest Addition
