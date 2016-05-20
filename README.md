@@ -158,7 +158,7 @@ bundle exec unicorn_rails -c /home/vagrant/shirasagi/config/unicorn.rb -E produc
 ビルドに成功すると `ss-vagrant-virtualbox-x86_64.box` ができます。
 ビルドには 20 分ぐらいかかります。
 
-### 32 ビット版
+### 32 ビット版 Vagrant Box のビルド方法
 
 GitHub には、合計 2GB までしかファイルをアップできないため、32 ビット版の提供を取りやめました。
 32 ビット版の Vagrant Box が必要な方は、ご自身でビルドしてください。
