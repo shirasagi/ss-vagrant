@@ -25,8 +25,8 @@ bundle exec rake ss:create_site data='{ name: "自治体サンプル", host: "ww
 bundle exec rake ss:create_site data='{ name: "企業サンプル", host: "company", domains: "192.168.33.10:3000" }'
 bundle exec rake db:seed name=demo site=www
 bundle exec rake db:seed name=company site=company
-bundle exec rake cms:generate_nodes site=www
-bundle exec rake cms:generate_pages site=www
+bundle exec rake cms:generate_nodes
+bundle exec rake cms:generate_pages
 
 bin/deploy
 _EOT_
