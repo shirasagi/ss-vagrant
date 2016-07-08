@@ -137,6 +137,7 @@ bundle exec unicorn_rails -c /home/vagrant/shirasagi/config/unicorn.rb -E produc
 
   * [Microsoft Visual C++ 2010 再頒布可能パッケージ (x86)](https://www.microsoft.com/ja-jp/download/details.aspx?id=5555)
   * [Microsoft Visual C++ 2010 再頒布可能パッケージ (x64)](https://www.microsoft.com/ja-jp/download/details.aspx?id=14632)
+  * 上記 2 つともインストールしてください。
 
 以上で問題が解決しない方は[シラサギプロジェクト開発コミュニティ](https://www.facebook.com/groups/ssproj/)で質問してください。
 
