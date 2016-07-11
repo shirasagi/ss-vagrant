@@ -60,9 +60,11 @@ Windows の方は [Tera Term](https://osdn.jp/projects/ttssh2/) などの SSH �
 * user: vagrant
 * password: vagrant
 
-シラサギ開発環境へのログインに成功したら、
-SHIRASAGI は `/home/vagrant` の直下にインストールしていますので、
-次のコマンドを実行し、確認してみましょう。
+シラサギ開発環境へのログインに成功したら次のようなプロンプトが表示され、コマンドの入力を待ち受けます。
+
+    [vagrant@localhost ~]$
+
+`tree -L 2 /home/vagrant` というコマンドを実行し、SHIRASAGI がインストールされていることを確認してみましょう。
 
     $ tree -L 2 /home/vagrant
     /home/vagrant
@@ -86,23 +88,23 @@ SHIRASAGI は `/home/vagrant` の直下にインストールしていますの�
         ├── tmp
         └── vendor
 
-SHIRASAGI を起動してみましょう。
+SHIRASAGI がインストールされていることを確認できたので、SHIRASAGI を起動してみましょう。
 
-```
+```sh
 $ cd $HOME/shirasagi
 $ bundle exec rake unicorn:start
 bundle exec unicorn_rails -c /home/vagrant/shirasagi/config/unicorn.rb -E production -D
 ```
 
 ブラウザで "http://localhost:3000/" にアクセスしてみましょう。
-次のような画面が表示されれば成功です。
+次のような自治体サンプルサイトの画面が表示されれば成功です。
 
 | SHIRASAGI TOP                        |
 |--------------------------------------|
 | ![SHIRASAGI TOP](images/top-min.png) |
 
 また、"http://192.168.33.10:3000/" にアクセスしてみてください。
-企業サンプルサイトの画面が表示されるはずです。
+次のような企業サンプルサイトの画面が表示されるはずです。
 
 | COMPANY TOP                              |
 |------------------------------------------|
