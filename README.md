@@ -60,13 +60,13 @@ Windows の方は [Tera Term](https://osdn.jp/projects/ttssh2/) などの SSH �
 * user: vagrant
 * password: vagrant
 
-シラサギ開発環境へのログインに成功したら次のようなプロンプトが表示され、コマンドの入力を待ち受けます。
+次のようなプロンプトが表示されれば、シラサギ開発環境へのログインに成功しています。この画面では、コマンドの入力を待ち受けます。
 
     [vagrant@localhost ~]$
 
 `tree -L 2 /home/vagrant` というコマンドを実行し、SHIRASAGI がインストールされていることを確認してみましょう。
 
-    $ tree -L 2 /home/vagrant
+    [vagrant@localhost ~]$ tree -L 2 /home/vagrant
     /home/vagrant
     └── shirasagi
         ├── Gemfile
@@ -87,6 +87,23 @@ Windows の方は [Tera Term](https://osdn.jp/projects/ttssh2/) などの SSH �
         ├── spec
         ├── tmp
         └── vendor
+
+`tree` コマンドが見つからないというエラーがでる方は、代わりに `ls -la` コマンドを実行してみましょう。
+
+```sh
+[vagrant@localhost ~]$ ls -la
+total 152
+drwx------ 10 vagrant vagrant  4096 Jun  3 23:04 .
+drwxr-xr-x  4 root    root     4096 Apr 26 20:44 ..
+-rw-r--r--  1 vagrant vagrant    18 Nov 20  2015 .bash_logout
+-rw-r--r--  1 vagrant vagrant   193 Nov 20  2015 .bash_profile
+-rw-r--r--  1 vagrant vagrant   255 Apr 26 20:50 .bashrc
+-rw-r--r--  1 vagrant vagrant    68 Mar 14 10:35 .gemrc
+-rw-------  1 vagrant vagrant     0 May 26 11:09 .mongorc.js
+drwxr-----  3 vagrant vagrant  4096 Mar 14 10:41 .pki
+drwxrwxr-x 17 vagrant vagrant  4096 Jul  8 19:21 shirasagi
+drwx------  2 vagrant vagrant  4096 Apr 26 20:30 .ssh
+```
 
 SHIRASAGI がインストールされていることを確認できたので、SHIRASAGI を起動してみましょう。
 
