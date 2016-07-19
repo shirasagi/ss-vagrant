@@ -28,10 +28,11 @@ SHIRASAGI 開発用の Vagrant Box を使用するには次のいずれかの環
     $ cd shirasagi-dev
     $ cat Vagrantfile
     Vagrant.configure(2) do |config|
-      config.vm.box = "ss-vagrant-v1.2.1"
-      config.vm.box_url = "https://github.com/shirasagi/ss-vagrant/releases/download/v1.2.1/ss-vagrant-virtualbox-x86_64.box"
+      config.vm.box = "ss-vagrant-v1.3.0"
+      config.vm.box_url = "https://github.com/shirasagi/ss-vagrant/releases/download/v1.3.0/ss-vagrant-virtualbox-x86_64.box"
       config.vm.network :forwarded_port, guest: 3000, host: 3000
       config.vm.network "private_network", ip: "192.168.33.10"
+      config.vm.network "private_network", ip: "192.168.33.11"
 
       config.vm.provider :virtualbox do |vb|
         # see: http://blog.shibayu36.org/entry/2013/08/12/090545
@@ -96,6 +97,8 @@ $ bundle exec rake unicorn:start
 bundle exec unicorn_rails -c /home/vagrant/shirasagi/config/unicorn.rb -E production -D
 ```
 
+### 自治体サンプルサイト
+
 ブラウザで "http://localhost:3000/" にアクセスしてみましょう。
 次のような自治体サンプルサイトの画面が表示されれば成功です。
 
@@ -103,12 +106,25 @@ bundle exec unicorn_rails -c /home/vagrant/shirasagi/config/unicorn.rb -E produc
 |--------------------------------------|
 | ![SHIRASAGI TOP](images/top-min.png) |
 
-また、"http://192.168.33.10:3000/" にアクセスしてみてください。
+### 企業サンプルサイト
+
+"http://192.168.33.10:3000/" にアクセスしてみてください。
 次のような企業サンプルサイトの画面が表示されるはずです。
 
 | COMPANY TOP                              |
 |------------------------------------------|
-| ![SHIRASAGI TOP](images/top-company.png) |
+| ![COMPANY TOP](images/top-company.png) |
+
+### 子育て支援サンプルサイト
+
+"http://192.168.33.11:3000/" にアクセスしてみてください。
+次のような子育て支援サンプルサイトの画面が表示されるはずです。
+
+| 子育て支援 TOP                             |
+|--------------------------------------------|
+| ![CHILDCARE TOP](images/top-childcare.png) |
+
+### 管理画面
 
 管理画面には http://localhost:3000/.mypage からアクセスできます。
 
