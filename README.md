@@ -175,11 +175,40 @@ bundle exec unicorn_rails -c /home/vagrant/shirasagi/config/unicorn.rb -E produc
   * [Microsoft Visual C++ 2010 再頒布可能パッケージ (x64)](https://www.microsoft.com/ja-jp/download/details.aspx?id=14632)
   * 上記 2 つともインストールしてください。
 
+* 次のように "Authentication failure" が繰り返し表示される場合、Vagrant を一つ前のバージョンに戻してみてください。
+
+  ```
+  > vagrant up default
+  ========= 省略 =========
+  ==> default: Booting VM...
+  ==> default: Waiting for machine to boot. This may take a few minutes...
+      default: SSH address: 127.0.0.1:2222
+      default: SSH username: vagrant
+      default: SSH auth method: private key
+      default: Warning: Connection timeout. Retrying...
+      default: Warning: Authentication failure. Retrying...
+      default: Warning: Authentication failure. Retrying...
+  ```
+
 以上で問題が解決しない方は[シラサギプロジェクト開発コミュニティ](https://www.facebook.com/groups/ssproj/)で質問してください。
 
 ### Mac
 
 * Intel ベースの Mac では、Intel VT は有効になっていますが、もし使用できない場合は https://support.apple.com/ja-jp/TS2744 を参照してください。
+* 次のように "Authentication failure" が繰り返し表示される場合、Vagrant を一つ前のバージョンに戻してみてください。
+
+  ```
+  > vagrant up default
+  ========= 省略 =========
+  ==> default: Booting VM...
+  ==> default: Waiting for machine to boot. This may take a few minutes...
+      default: SSH address: 127.0.0.1:2222
+      default: SSH username: vagrant
+      default: SSH auth method: private key
+      default: Warning: Connection timeout. Retrying...
+      default: Warning: Authentication failure. Retrying...
+      default: Warning: Authentication failure. Retrying...
+  ```
 
 以上で問題が解決しない方は[シラサギプロジェクト開発コミュニティ](https://www.facebook.com/groups/ssproj/)で質問してください。
 
@@ -187,12 +216,12 @@ bundle exec unicorn_rails -c /home/vagrant/shirasagi/config/unicorn.rb -E produc
 
 ### Vagrant Box の中身
 
-* VirtualBox 5.0.20 r106931 Guest Addition
-* CentOS 7.2.1511 (2016-06-11 時点での最新)
-* MongoDB 3.2.7
+* VirtualBox 5.0.26 r108824 Guest Addition
+* CentOS 7.2.1511 (2016-07-21 時点での最新)
+* MongoDB 3.2.8
 * RVM 1.27.0
 * Ruby 2.3.1p112
-* SHIRASAGI のソース一式 (v1.2.0)
+* SHIRASAGI のソース一式 (v1.3.0)
 
 ### Vagrant Box のビルド方法
 
