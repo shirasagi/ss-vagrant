@@ -17,14 +17,22 @@ do
   fi
 done
 
+# change secret
 sed -i "s/dbcae379.*$/\$(rake secret)/" config/secrets.yml
 
+# enable gws
+sed -e "s/disable: true$/disable: false/" config/defaults/gws.yml > config/gws.yml
+
+# install seeds
 bundle exec rake db:create_indexes
 bundle exec rake ss:create_user data='{ name: "システム管理者", email: "sys@example.jp", password: "pass" }'
 bundle exec rake ss:create_site data='{ name: "自治体サンプル", host: "www", domains: "localhost:3000" }'
 bundle exec rake ss:create_site data='{ name: "企業サンプル", host: "company", domains: "192.168.33.10:3000" }'
+bundle exec rake ss:create_site data='{ name: "子育て支援サンプル", host: "childcare", domains: "192.168.33.11:3000" }'
 bundle exec rake db:seed name=demo site=www
 bundle exec rake db:seed name=company site=company
+bundle exec rake db:seed name=childcare site=childcare
+bundle exec rake db:seed name=gws site=シラサギ市
 bundle exec rake cms:generate_nodes
 bundle exec rake cms:generate_pages
 
