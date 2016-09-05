@@ -229,7 +229,7 @@ bundle exec unicorn_rails -c /home/vagrant/shirasagi/config/unicorn.rb -E produc
 
 以上で問題が解決しない方は[シラサギプロジェクト開発コミュニティ](https://www.facebook.com/groups/ssproj/)で質問してください。
 
-## 補足
+## Vagrant Box 詳細
 
 ### Vagrant Box の中身
 
@@ -261,5 +261,38 @@ GitHub には、合計 2GB までしかファイルをアップできないた�
     $ git clone "https://github.com/shirasagi/ss-vagrant.git"
     $ cd ss-vagrant/packer
     $ packer build -only=virtualbox-iso -var-file=virtualbox-i386-variables.json template.json
+
+## Windows の共有フォルダーを使った開発方法
+
+Windows 版 Vagrant Box の共有ファイルは非常に遅く、Windows の共有フォルダーを使った方が、
+早くて快適にシラサギの開発をすすめることが出来ます。
+
+次にその手順を解説します。
+
+なお、Mac 版 Vagrant Box の共有ファイルは遅くはないので、そのままご利用ください。
+
+### Windows の共有フォルダーの利用方法
+
+次のコマンドを Vagrant Box 内で実行し CIFS をインストールします。
+CIFS とは、Linux 上で Windows の共有フォルダーを使用するためのツールです。
+
+    $ yum -y install cifs-utils
+
+Windows 側でシラサギの開発ディレクトリを `www` という名前で共有します。
+次のコマンドを実行し、Windows の共有フォルダー `www` を `/var/www` にマウントします。
+
+    $ sudo mkdir -p /var/www
+    $ sudo mount -t cifs -o user=vagrant //10.0.2.2/www /var/www
+
+`/var/www` の中身を表示してみると、Windows 側と同じファイルが見えるようになります。
+
+    $ tree -L 2 /var/www
+
+### Windows の共有フォルダーを起動時に自動でマウントさせる設定
+
+Vagrant Box 内の `/etc/fstab` ファイルに次の行を追加します。
+
+
+    //10.0.2.2/www /var/www cifs user=vagrant,password=****,dir_mode=0777,file_mode=0666 0 0
 
 以上。
