@@ -28,11 +28,12 @@ SHIRASAGI 開発用の Vagrant Box を使用するには次のいずれかの環
     $ cd shirasagi-dev
     $ cat Vagrantfile
     Vagrant.configure(2) do |config|
-      config.vm.box = "ss-vagrant-v1.3.0"
-      config.vm.box_url = "https://github.com/shirasagi/ss-vagrant/releases/download/v1.3.0/ss-vagrant-virtualbox-x86_64.box"
+      config.vm.box = "ss-vagrant-v1.4.0"
+      config.vm.box_url = "https://github.com/shirasagi/ss-vagrant/releases/download/v1.4.0/ss-vagrant-virtualbox-x86_64.box"
       config.vm.network :forwarded_port, guest: 3000, host: 3000
       config.vm.network "private_network", ip: "192.168.33.10"
       config.vm.network "private_network", ip: "192.168.33.11"
+      config.vm.network "private_network", ip: "192.168.33.12"
 
       config.vm.provider :virtualbox do |vb|
         # see: http://blog.shibayu36.org/entry/2013/08/12/090545
@@ -141,6 +142,15 @@ bundle exec unicorn_rails -c /home/vagrant/shirasagi/config/unicorn.rb -E produc
 |-------------------------------------------------|
 | ![子育て支援サンプル](images/top-childcare.png) |
 
+### オープンデータサンプルサイト
+
+ブラウザで "http://192.168.33.12:3000/" にアクセスしてみてください。
+次のようなオープンデータサンプルサイトの画面が表示されるはずです。
+
+| オープンデータ                                  |
+|-------------------------------------------------|
+| ![オープンデータサンプル](images/top-opendata.png) |
+
 ### グループウェア
 
 ブラウザで "http://localhost:3000/.g1" にアクセスし、sys / pass でログインしてみてください。
@@ -234,11 +244,11 @@ bundle exec unicorn_rails -c /home/vagrant/shirasagi/config/unicorn.rb -E produc
 ### Vagrant Box の中身
 
 * VirtualBox 5.0.26 r108824 Guest Addition
-* CentOS 7.2.1511 (2016-07-21 時点での最新)
-* MongoDB 3.2.8
+* CentOS 7.2.1511 (2016-10-28 時点での最新)
+* MongoDB 3.2.10
 * RVM 1.27.0
 * Ruby 2.3.1p112
-* SHIRASAGI のソース一式 (v1.3.0)
+* SHIRASAGI のソース一式 (v1.4.0)
 
 ### Vagrant Box のビルド方法
 
