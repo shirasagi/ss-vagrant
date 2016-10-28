@@ -1,9 +1,17 @@
 yum -y install wget
 
 cd /usr/local/src
-wget http://mecab.googlecode.com/files/mecab-0.996.tar.gz \
-     http://mecab.googlecode.com/files/mecab-ipadic-2.7.0-20070801.tar.gz \
-     http://mecab.googlecode.com/files/mecab-ruby-0.996.tar.gz
+wget -O mecab-0.996.tar.gz 'https://drive.google.com/uc?export=download&id=0B4y35FiV1wh7cENtOXlicTFaRUE'
+if [ $? -ne 0 ]; then
+  exit 1
+fi
+
+wget -O mecab-ipadic-2.7.0-20070801.tar.gz 'https://drive.google.com/uc?id=0B4y35FiV1wh7MWVlSDBCSXZMTXM&authuser=0&export=download'
+if [ $? -ne 0 ]; then
+  exit 1
+fi
+
+wget -O mecab-ruby-0.996.tar.gz 'https://drive.google.com/uc?id=0B4y35FiV1wh7VUNlczBWVDZJbE0&authuser=0&export=download'
 if [ $? -ne 0 ]; then
   exit 1
 fi
