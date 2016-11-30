@@ -40,3 +40,6 @@ bundle exec rake cms:generate_pages
 
 bin/deploy
 _EOT_
+
+# use openlayers as default map
+echo 'db.ss_sites.update({}, { $set: { map_api: "openlayers" } }, { multi: true });' | mongo ss > /dev/null
