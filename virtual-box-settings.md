@@ -9,8 +9,9 @@ NAT ネットワークが適切に作成されているかを確認します。
 1. VirtualBox アプリケーションを起動
 2. メニューの [ファイル] -> [環境設定] をクリック
 3. 左側の一覧から [ネットワーク] を選択
-4. 右側の一覧に "NatNetwork" があることを確認
-  ![NatNetwork](images/vb-nat-network.png)
+4. 右側の一覧に "NatNetwork" があることを確認<br/>
+  ![NatNetwork](images/vb-nat-network.png)<br/>
+5. "NatNetwork" が見つからない場合、"NatNetwork" を作成
 
 ### 仮想マシンのネットワークの確認
 
@@ -20,5 +21,6 @@ NAT ネットワークが適切に作成されているかを確認します。
 2. 左側の一覧から仮想マシンを選択し、上部ツールバーの [設定] をクリック
 3. 左側の一覧から [ネットワーク] を選択
 4. 右側の [高度] をクリックし、詳細な情報を表示
-5. [ケーブル接続] にチェックが入っていることを確認
-  ![CableConnection](images/vb-nat-cable-connection.png)
+5. [ケーブル接続] にチェックが入っていることを確認<br/>
+  ![CableConnection](images/vb-nat-cable-connection.png)<br/>
+6. [ケーブル接続] にチェックが入っていない場合、チェックを入れる
