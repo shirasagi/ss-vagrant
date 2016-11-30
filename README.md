@@ -187,6 +187,7 @@ bundle exec unicorn_rails -c /home/vagrant/shirasagi/config/unicorn.rb -E produc
   [VirtualChecker](http://www.forest.impress.co.jp/library/software/virtualcheck/) をダウンロードし、実行してください。
   Enabled と表示されれば Intel VT/AMD-V が有効になっており、Vagrant を使用することができます。
   Disabled と表示された場合、BIOS の設定を確認し Intel VT/AMD-V を有効にすることで Vagrant を使うことが出来ます。
+* Hyper-V とは同居できません。Hyper-V を無効にするか、アンインストールしてください。
 * ユーザ名に日本語が含まれる場合、Vagrant が起動しない場合があります。
   環境変数 `VAGRANT_HOME` を日本語を含まないディレクトリに設定し、VirtualBox の設定を変更し、default VM folder を日本語を含まないディレクトリに変更してください。
   参考: [incompatible character encodings: CP850 and Windows-1252](https://github.com/mitchellh/vagrant/issues/3937)
@@ -217,6 +218,21 @@ bundle exec unicorn_rails -c /home/vagrant/shirasagi/config/unicorn.rb -E produc
       default: Warning: Authentication failure. Retrying...
   ```
 
+* 次のように Connection timeout が繰り返し表示される場合、[VirtualBox の設定の確認方法](virtual-box-settings.md) を参照し VirtualBox の設定を確認してみてください。
+
+  ```
+  > vagrant up default
+  ========= 省略 =========
+  ==> default: Booting VM...
+  ==> default: Waiting for machine to boot. This may take a few minutes...
+      default: SSH address: 127.0.0.1:2222
+      default: SSH username: vagrant
+      default: SSH auth method: private key
+      default: Warning: Connection timeout. Retrying...
+      default: Warning: Connection timeout. Retrying...
+      default: Warning: Connection timeout. Retrying...
+  ```
+
 以上で問題が解決しない方は[シラサギプロジェクト開発コミュニティ](https://www.facebook.com/groups/ssproj/)で質問してください。
 
 ### Mac
@@ -236,6 +252,8 @@ bundle exec unicorn_rails -c /home/vagrant/shirasagi/config/unicorn.rb -E produc
       default: Warning: Authentication failure. Retrying...
       default: Warning: Authentication failure. Retrying...
   ```
+
+* 他にもうまくいかない場合、Vagrant を一つ前のバージョンに戻してみてください。
 
 以上で問題が解決しない方は[シラサギプロジェクト開発コミュニティ](https://www.facebook.com/groups/ssproj/)で質問してください。
 
