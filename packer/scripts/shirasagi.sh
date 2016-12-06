@@ -23,6 +23,9 @@ sed -i "s/dbcae379.*$/\$(rake secret)/" config/secrets.yml
 # enable gws
 sed -e "s/disable: true$/disable: false/" config/defaults/gws.yml > config/gws.yml
 
+# enable recommendation
+sed -e "s/disable: true$/disable: false/" config/defaults/recommend.yml > config/recommend.yml
+
 # install seeds
 bundle exec rake db:create_indexes
 bundle exec rake ss:create_user data='{ name: "システム管理者", email: "sys@example.jp", password: "pass" }'
