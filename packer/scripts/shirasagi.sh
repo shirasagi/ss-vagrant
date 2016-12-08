@@ -38,11 +38,29 @@ bundle exec rake db:seed name=company site=company
 bundle exec rake db:seed name=childcare site=childcare
 bundle exec rake db:seed name=opendata site=opendata
 bundle exec rake db:seed name=gws site=シラサギ市
+
+# use openlayers as default map
+echo 'db.ss_sites.update({}, { $set: { map_api: "openlayers" } }, { multi: true });' | mongo ss > /dev/null
+
 bundle exec rake cms:generate_nodes
 bundle exec rake cms:generate_pages
 
 bin/deploy
 _EOT_
 
-# use openlayers as default map
-echo 'db.ss_sites.update({}, { $set: { map_api: "openlayers" } }, { multi: true });' | mongo ss > /dev/null
+# modify ImageMagick policy to work with simple captcha
+# see: https://github.com/diaspora/diaspora/issues/6828
+cd /etc/ImageMagick && cat << _EOT_ | patch
+--- policy.xml.orig     2016-12-08 13:50:47.344009000 +0900
++++ policy.xml  2016-12-08 13:15:22.529009000 +0900
+@@ -67,6 +67,8 @@
+   <policy domain="coder" rights="none" pattern="MVG" />
+   <policy domain="coder" rights="none" pattern="MSL" />
+   <policy domain="coder" rights="none" pattern="TEXT" />
+-  <policy domain="coder" rights="none" pattern="LABEL" />
++  <!-- <policy domain="coder" rights="none" pattern="LABEL" /> -->
+   <policy domain="path" rights="none" pattern="@*" />
++  <policy domain="coder" rights="read | write" pattern="JPEG" />
++  <policy domain="coder" rights="read | write" pattern="PNG" />
+ </policymap>
+_EOT_
