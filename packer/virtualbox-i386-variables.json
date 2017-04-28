@@ -1,9 +1,9 @@
 {
   "os": "centos6",
   "guest_os_type" : "RedHat",
-  "iso_url" : "http://ftp.iij.ad.jp/pub/linux/centos/6.7/isos/i386/CentOS-6.7-i386-minimal.iso",
-  "iso_checksum" : "1860eb4d69c39ca274c6e2e9670d9e4fa77ea29c",
+  "iso_url" : "http://ftp.iij.ad.jp/pub/linux/centos/6.9/isos/i386/CentOS-6.9-i386-minimal.iso",
+  "iso_checksum" : "9ec1a567e8ed4a66ff702e9d227790f1f139c3e1",
   "iso_checksum_type" : "sha1",
-  "memory" : "512",
+  "memory" : "1024",
   "arch": "i386"
 }
