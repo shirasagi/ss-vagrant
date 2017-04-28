@@ -2,8 +2,8 @@
   "variables": {
     "os": "centos7",
     "guest_os_type": "RedHat_64",
-    "iso_url": "http://ftp.iij.ad.jp/pub/linux/centos/7.2.1511/isos/x86_64/CentOS-7-x86_64-Minimal-1511.iso",
-    "iso_checksum": "783eef50e1fb91c78901d0421d8114a29b998478",
+    "iso_url": "http://ftp.iij.ad.jp/pub/linux/centos/7.3.1611/isos/x86_64/CentOS-7-x86_64-Minimal-1611.iso",
+    "iso_checksum": "71a7aa147877b413497cdff5b1e0aa5bc0c9484f",
     "iso_checksum_type": "sha1",
     "memory": "1536",
     "arch": "x86_64"
