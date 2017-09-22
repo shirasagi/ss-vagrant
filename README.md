@@ -27,11 +27,16 @@ SHIRASAGI 開発用の Vagrant Box を使用するには次のいずれかの環
 
 | バージョン | 動作                       | ダウンロード |
 |------------|----------------------------|----------|
+| 2.0.0      | Windows での動作に問題あり | |
+| 1.9.8      | Windows での動作に問題あり | |
+| 1.9.7      | Windows で正常に起動しない | |
+| 1.9.6      | Windows での動作に問題あり | |
+| 1.9.5      | 未確認                     | |
 | 1.9.4      | Windows で正常に起動しない | |
 | 1.9.3      | Windows で正常に起動しない | |
-| 1.9.2◎    | Windows/Mac ともに OK      | [Win](https://releases.hashicorp.com/vagrant/1.9.2/vagrant_1.9.2.msi) [Mac](https://releases.hashicorp.com/vagrant/1.9.2/vagrant_1.9.2.dmg) |
+| 1.9.2◎    | Windows/Mac ともに OK      | [Win](https://releases.hashicorp.com/vagrant/1.9.2/vagrant_1.9.2.msi) / [Mac](https://releases.hashicorp.com/vagrant/1.9.2/vagrant_1.9.2.dmg) |
 | 1.9.1      | 未確認                     | |
-| 1.9.0      | Windows/Mac ともに OK      | [Win](https://releases.hashicorp.com/vagrant/1.9.0/vagrant_1.9.0.msi) [Mac](https://releases.hashicorp.com/vagrant/1.9.0/vagrant_1.9.0.dmg) |
+| 1.9.0      | Windows/Mac ともに OK      | [Win](https://releases.hashicorp.com/vagrant/1.9.0/vagrant_1.9.0.msi) / [Mac](https://releases.hashicorp.com/vagrant/1.9.0/vagrant_1.9.0.dmg) |
 
 [Download Vagrant](https://www.vagrantup.com/downloads.html) にアクセスし、[download older versions of Vagrant](https://releases.hashicorp.com/vagrant/)をクリックすると、
 過去のバージョンの vagrant をダウンロードすることができます。
@@ -44,8 +49,8 @@ SHIRASAGI 開発用の Vagrant Box を使用するには次のいずれかの環
     $ cd shirasagi-dev
     $ cat Vagrantfile
     Vagrant.configure(2) do |config|
-      config.vm.box = "ss-vagrant-v1.5.0-rev2"
-      config.vm.box_url = "https://github.com/shirasagi/ss-vagrant/releases/download/v1.5.0-rev2/ss-vagrant-virtualbox-x86_64.box"
+      config.vm.box = "ss-vagrant-v1.6.0-rc"
+      config.vm.box_url = "https://github.com/shirasagi/ss-vagrant/releases/download/v1.6.0-rc/ss-vagrant-virtualbox-x86_64.box"
       config.vm.network :forwarded_port, guest: 3000, host: 3000
       config.vm.network "private_network", ip: "192.168.33.10"
       config.vm.network "private_network", ip: "192.168.33.11"
@@ -82,10 +87,10 @@ Windows の方は [Tera Term](https://osdn.jp/projects/ttssh2/) などの SSH �
 
     [vagrant@localhost ~]$
 
-`tree -L 2 /home/vagrant` というコマンドを実行し、SHIRASAGI がインストールされていることを確認してみましょう。
+`tree -L 2 /var/www` というコマンドを実行し、SHIRASAGI がインストールされていることを確認してみましょう。
 
-    [vagrant@localhost ~]$ tree -L 2 /home/vagrant
-    /home/vagrant
+    [vagrant@localhost ~]$ tree -L 2 /var/www
+    /var/www
     └── shirasagi
         ├── Gemfile
         ├── Gemfile.lock
@@ -106,29 +111,12 @@ Windows の方は [Tera Term](https://osdn.jp/projects/ttssh2/) などの SSH �
         ├── tmp
         └── vendor
 
-`tree` コマンドが見つからないというエラーがでる方は、代わりに `ls -la` コマンドを実行してみましょう。
-
-```sh
-[vagrant@localhost ~]$ ls -la
-total 152
-drwx------ 10 vagrant vagrant  4096 Jun  3 23:04 .
-drwxr-xr-x  4 root    root     4096 Apr 26 20:44 ..
--rw-r--r--  1 vagrant vagrant    18 Nov 20  2015 .bash_logout
--rw-r--r--  1 vagrant vagrant   193 Nov 20  2015 .bash_profile
--rw-r--r--  1 vagrant vagrant   255 Apr 26 20:50 .bashrc
--rw-r--r--  1 vagrant vagrant    68 Mar 14 10:35 .gemrc
--rw-------  1 vagrant vagrant     0 May 26 11:09 .mongorc.js
-drwxr-----  3 vagrant vagrant  4096 Mar 14 10:41 .pki
-drwxrwxr-x 17 vagrant vagrant  4096 Jul  8 19:21 shirasagi
-drwx------  2 vagrant vagrant  4096 Apr 26 20:30 .ssh
-```
-
 SHIRASAGI がインストールされていることを確認できたので、SHIRASAGI を起動してみましょう。
 
 ```sh
 $ cd $HOME/shirasagi
 $ bundle exec rake unicorn:start
-bundle exec unicorn_rails -c /home/vagrant/shirasagi/config/unicorn.rb -E production -D
+bundle exec unicorn_rails -c /var/www/shirasagi/config/unicorn.rb -E production -D
 ```
 
 ### 自治体サンプルサイト
@@ -277,12 +265,12 @@ bundle exec unicorn_rails -c /home/vagrant/shirasagi/config/unicorn.rb -E produc
 
 ### Vagrant Box の中身
 
-*VirtualBox 5.1.22 r115126 Guest Addition
-* CentOS 7.3.1611 (2017-05-11 時点での最新)
-* MongoDB 3.4.4
-* RVM 1.29.1
-* Ruby 2.3.4p301
-* SHIRASAGI のソース一式 (v1.5.0)
+* VirtualBox 5.1.28 r117968 Guest Addition
+* CentOS 7.4.1708 (2017-09-22 時点での最新)
+* MongoDB 3.4.9
+* RVM 1.29.3
+* Ruby 2.4.2p198
+* SHIRASAGI のソース一式 (v1.6.0 RC)
 
 ### Vagrant Box のビルド方法
 
