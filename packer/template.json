@@ -16,6 +16,8 @@
         "os={{user `os`}}",
         "arch={{user `arch`}}"
       ],
+      "expect_disconnect": true,
+      "pause_before": "10s",
       "override": {
         "virtualbox-iso": {
           "scripts": [
