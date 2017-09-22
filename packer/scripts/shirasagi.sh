@@ -1,40 +1,24 @@
 yum -y install git wget ImageMagick ImageMagick-devel
 
 mkdir -p /var/www/
-cd /var/www
-git clone https://github.com/shirasagi/shirasagi
-# git checkout -b v0.9.5 origin/v0.9.5
+git clone https://github.com/shirasagi/shirasagi /var/www/shirasagi
+chown -R $SUDO_USER:$SUDO_USER /var/www/shirasagi
+
+cd $HOME && cat << _EOT_ | sudo -u $SUDO_USER bash
+cd \$HOME
+source /etc/profile.d/rvm.sh
+ln -s /var/www/shirasagi .
 cd shirasagi
 cp -np config/samples/*.{yml,rb} config/
 
-source /etc/profile.d/rvm.sh
 echo "== bundle install"
-for i in $(seq 1 5)
+for i in \$(seq 1 5)
 do
   bundle install
   if [ $? -eq 0 ]; then
     break
   fi
 done
-
-chown -R $SUDO_USER:$SUDO_USER /var/www/shirasagi
-
-cd $HOME && cat << _EOT_ | sudo -u $SUDO_USER bash
-cd \$HOME
-source /etc/profile.d/rvm.sh
-# git clone https://github.com/shirasagi/shirasagi
-ln -s /var/www/shirasagi .
-cd shirasagi
-# cp -np config/samples/*.{yml,rb} config/
-
-# echo "== bundle install"
-# for i in \$(seq 1 5)
-# do
-#   bundle install
-#   if [ $? -eq 0 ]; then
-#     break
-#   fi
-# done
 
 # change secret
 sed -i "s/dbcae379.*$/\$(rake secret)/" config/secrets.yml
