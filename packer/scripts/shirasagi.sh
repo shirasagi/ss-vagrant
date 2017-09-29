@@ -36,10 +36,12 @@ bundle exec rake ss:create_site data='{ name: "自治体サンプル", host: "ww
 bundle exec rake ss:create_site data='{ name: "企業サンプル", host: "company", domains: "192.168.33.10:3000" }'
 bundle exec rake ss:create_site data='{ name: "子育て支援サンプル", host: "childcare", domains: "192.168.33.11:3000" }'
 bundle exec rake ss:create_site data='{ name: "オープンデータサンプル", host: "opendata", domains: "192.168.33.12:3000" }'
+bundle exec rake ss:create_site data='{ name: "LPサンプル", host: "lp_", domains: "192.168.33.13:3000" }'
 bundle exec rake db:seed name=demo site=www
 bundle exec rake db:seed name=company site=company
 bundle exec rake db:seed name=childcare site=childcare
 bundle exec rake db:seed name=opendata site=opendata
+bundle exec rake db:seed name=lp site=lp_
 bundle exec rake db:seed name=gws site=シラサギ市
 
 # use openlayers as default map
