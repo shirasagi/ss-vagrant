@@ -49,12 +49,13 @@ SHIRASAGI 開発用の Vagrant Box を使用するには次のいずれかの環
     $ cd shirasagi-dev
     $ cat Vagrantfile
     Vagrant.configure(2) do |config|
-      config.vm.box = "ss-vagrant-v1.6.0-rc"
-      config.vm.box_url = "https://github.com/shirasagi/ss-vagrant/releases/download/v1.6.0-rc/ss-vagrant-virtualbox-x86_64.box"
+      config.vm.box = "ss-vagrant-v1.6.0"
+      config.vm.box_url = "https://github.com/shirasagi/ss-vagrant/releases/download/v1.6.0/ss-vagrant-virtualbox-x86_64.box"
       config.vm.network :forwarded_port, guest: 3000, host: 3000
       config.vm.network "private_network", ip: "192.168.33.10"
       config.vm.network "private_network", ip: "192.168.33.11"
       config.vm.network "private_network", ip: "192.168.33.12"
+      config.vm.network "private_network", ip: "192.168.33.13"
 
       config.vm.provider :virtualbox do |vb|
         # see: http://blog.shibayu36.org/entry/2013/08/12/090545
@@ -154,6 +155,15 @@ bundle exec unicorn_rails -c /var/www/shirasagi/config/unicorn.rb -E production 
 | オープンデータ                                  |
 |-------------------------------------------------|
 | ![オープンデータサンプル](images/top-opendata.png) |
+
+### LPサンプルサイト
+
+ブラウザで "http://192.168.33.13:3000/" にアクセスしてみてください。
+次のようなLPサンプルサイトの画面が表示されるはずです。
+
+| LPサンプル                                  |
+|-------------------------------------------------|
+| ![LPサンプル](images/top-lp.png) |
 
 ### グループウェア
 
