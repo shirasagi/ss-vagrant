@@ -27,8 +27,8 @@ SHIRASAGI 開発用の Vagrant Box を使用するには次のいずれかの環
 
 | バージョン | 動作                       | ダウンロード |
 |------------|----------------------------|----------|
-| 2.2.0      |                         | |
-| 1.9.2◎    | Windows/Mac ともに OK      | [Win](https://releases.hashicorp.com/vagrant/1.9.2/vagrant_1.9.2.msi) / [Mac](https://releases.hashicorp.com/vagrant/1.9.2/vagrant_1.9.2.dmg) |
+| 2.2.0◎      |    未確認                     | |
+| 1.9.2    | Windows/Mac ともに OK      | [Win](https://releases.hashicorp.com/vagrant/1.9.2/vagrant_1.9.2.msi) / [Mac](https://releases.hashicorp.com/vagrant/1.9.2/vagrant_1.9.2.dmg) |
 | 1.9.0      | Windows/Mac ともに OK      | [Win](https://releases.hashicorp.com/vagrant/1.9.0/vagrant_1.9.0.msi) / [Mac](https://releases.hashicorp.com/vagrant/1.9.0/vagrant_1.9.0.dmg) |
 
 [Download Vagrant](https://www.vagrantup.com/downloads.html) にアクセスし、[download older versions of Vagrant](https://releases.hashicorp.com/vagrant/)をクリックすると、
@@ -64,22 +64,28 @@ hostsファイルの設定の方法
 Windows の hosts ファイルは以下にあります。
 編集には管理者権限が必要です。
 
-●Windows 10のhostsファイル
-C:\Windows\System32\drivers\etc\hosts
+* Windows 10 の hosts ファイル
 
-●Windows 8 / Windows 8.1のhostsファイル
-C:\Windows\System32\drivers\etc\hosts
+      C:\Windows\System32\drivers\etc\hosts
 
-●Windows 7のhostsファイル
-C:\Windows\System32\drivers\etc\hosts
+* Windows 8 / Windows 8.1 の hosts ファイル
 
-●Windows Vistaのhostsファイル
-C:\Windows\System32\drivers\etc\hosts
+      C:\Windows\System32\drivers\etc\hosts
+
+* Windows 7 の hosts ファイル
+
+      C:\Windows\System32\drivers\etc\hosts
+
+* Windows Vista の hosts ファイル
+
+      C:\Windows\System32\drivers\etc\hosts
 
 Macのhostsファイルは以下にあります。
 編集にはroot権限が必要です。
 
-/etc/hosts
+* Mac の hosts ファイル
+
+      /etc/hosts
 
 ### シラサギへアクセス
 
