@@ -2,6 +2,8 @@ yum -y install git wget ImageMagick ImageMagick-devel
 
 mkdir -p /var/www/
 git clone https://github.com/shirasagi/shirasagi /var/www/shirasagi
+cd /var/www/shirasagi
+git checkout -b v1.9.1 refs/tags/v1.9.1
 chown -R $SUDO_USER:$SUDO_USER /var/www/shirasagi
 
 cd $HOME && cat << _EOT_ | sudo -u $SUDO_USER bash
@@ -31,12 +33,11 @@ sed -e "s/disable: true$/disable: false/" config/defaults/recommend.yml > config
 
 # install seeds
 bundle exec rake db:create_indexes
-bundle exec rake ss:create_user data='{ name: "システム管理者", email: "sys@example.jp", password: "pass" }'
 bundle exec rake ss:create_site data='{ name: "自治体サンプル", host: "www", domains: "localhost:3000" }'
-bundle exec rake ss:create_site data='{ name: "企業サンプル", host: "company", domains: "192.168.33.10:3000" }'
-bundle exec rake ss:create_site data='{ name: "子育て支援サンプル", host: "childcare", domains: "192.168.33.11:3000" }'
-bundle exec rake ss:create_site data='{ name: "オープンデータサンプル", host: "opendata", domains: "192.168.33.12:3000" }'
-bundle exec rake ss:create_site data='{ name: "LPサンプル", host: "lp_", domains: "192.168.33.13:3000" }'
+bundle exec rake ss:create_site data='{ name: "企業サンプル", host: "company", domains: "company.example.jp:3000 192.168.33.10:3000" }'
+bundle exec rake ss:create_site data='{ name: "子育て支援サンプル", host: "childcare", domains: "childcare.example.jp:3000 192.168.33.11:3000" }'
+bundle exec rake ss:create_site data='{ name: "オープンデータサンプル", host: "opendata", domains: "opendata.example.jp:3000 192.168.33.12:3000" }'
+bundle exec rake ss:create_site data='{ name: "LPサンプル", host: "lp_", domains: "lp.example.jp:3000 192.168.33.13:3000" }'
 bundle exec rake db:seed name=demo site=www
 bundle exec rake db:seed name=company site=company
 bundle exec rake db:seed name=childcare site=childcare

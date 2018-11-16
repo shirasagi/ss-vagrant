@@ -3,7 +3,7 @@ gpg2 --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB
 if [ $? -ne 0 ]; then
   gpg2 --keyserver hkp://pgp.mit.edu --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
 fi
-curl -sSL https://get.rvm.io | sudo bash -s stable --ruby=2.4.2
+curl -sSL https://get.rvm.io | sudo bash -s stable --ruby=2.4.4
 
 echo "gem: --no-ri --no-rdoc" >> /home/$SUDO_USER/.gemrc
 echo "install: --no-document" >> /home/$SUDO_USER/.gemrc

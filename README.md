@@ -27,15 +27,8 @@ SHIRASAGI 開発用の Vagrant Box を使用するには次のいずれかの環
 
 | バージョン | 動作                       | ダウンロード |
 |------------|----------------------------|----------|
-| 2.0.0      | Windows での動作に問題あり | |
-| 1.9.8      | Windows での動作に問題あり | |
-| 1.9.7      | Windows で正常に起動しない | |
-| 1.9.6      | Windows での動作に問題あり | |
-| 1.9.5      | 未確認                     | |
-| 1.9.4      | Windows で正常に起動しない | |
-| 1.9.3      | Windows で正常に起動しない | |
+| 2.2.0      |                         | |
 | 1.9.2◎    | Windows/Mac ともに OK      | [Win](https://releases.hashicorp.com/vagrant/1.9.2/vagrant_1.9.2.msi) / [Mac](https://releases.hashicorp.com/vagrant/1.9.2/vagrant_1.9.2.dmg) |
-| 1.9.1      | 未確認                     | |
 | 1.9.0      | Windows/Mac ともに OK      | [Win](https://releases.hashicorp.com/vagrant/1.9.0/vagrant_1.9.0.msi) / [Mac](https://releases.hashicorp.com/vagrant/1.9.0/vagrant_1.9.0.dmg) |
 
 [Download Vagrant](https://www.vagrantup.com/downloads.html) にアクセスし、[download older versions of Vagrant](https://releases.hashicorp.com/vagrant/)をクリックすると、
@@ -43,26 +36,14 @@ SHIRASAGI 開発用の Vagrant Box を使用するには次のいずれかの環
 
 ## 使用方法
 
+### シラサギの起動
+
 適当なディレクトリを作成し、次のような内容を持つ `Vagrantfile` を作成してください。
 
-    $ mkdir shirasagi-dev
-    $ cd shirasagi-dev
-    $ cat Vagrantfile
     Vagrant.configure(2) do |config|
-      config.vm.box = "ss-vagrant-v1.6.0"
-      config.vm.box_url = "https://github.com/shirasagi/ss-vagrant/releases/download/v1.6.0/ss-vagrant-virtualbox-x86_64.box"
-      config.vm.network :forwarded_port, guest: 3000, host: 3000
-      config.vm.network "private_network", ip: "192.168.33.10"
-      config.vm.network "private_network", ip: "192.168.33.11"
-      config.vm.network "private_network", ip: "192.168.33.12"
-      config.vm.network "private_network", ip: "192.168.33.13"
-
-      config.vm.provider :virtualbox do |vb|
-        # see: http://blog.shibayu36.org/entry/2013/08/12/090545
-        # IPv6 と DNS でのネットワーク遅延対策で追記
-        vb.customize ["modifyvm", :id, "--natdnsproxy1", "off"]
-        vb.customize ["modifyvm", :id, "--natdnshostresolver1", "off"]
-      end
+      config.vm.box = "ss-vagrant-v1.9.1"
+      config.vm.box_url = "https://github.com/shirasagi/ss-vagrant/releases/download/ss-vagrant-v1.9.1/ss-vagrant-virtualbox-x86_64.box"
+      config.vm.network "forwarded_port", guest: 3000, host: 3000
     end
 
 次のコマンドを実行してください。シラサギ開発環境が起動します。
@@ -71,6 +52,36 @@ SHIRASAGI 開発用の Vagrant Box を使用するには次のいずれかの環
 
 `vagrant up` コマンドは 10 分から 20 分ぐらいかかるので、コーヒーでも飲みながら待ってください。
 `vagrant up` コマンドが失敗した場合、<a href="#vagrant-%E3%81%8C%E8%B5%B7%E5%8B%95%E3%81%97%E3%81%AA%E3%81%84%E5%A0%B4%E5%90%88">Vagrant が起動しない場合</a>を参考にして問題を解決してください。
+
+### hosts ファイルの設定
+
+待っている間に、シラサギを使用するには hosts ファイルの設定が必要なため、ここからは hosts ファイルを設定していきます。
+
+hostsファイルの設定の方法
+
+    127.0.0.1 company.example.jp childcare.example.jp opendata.example.jp lp.example.jp
+
+Windows の hosts ファイルは以下にあります。
+編集には管理者権限が必要です。
+
+●Windows 10のhostsファイル
+C:\Windows\System32\drivers\etc\hosts
+
+●Windows 8 / Windows 8.1のhostsファイル
+C:\Windows\System32\drivers\etc\hosts
+
+●Windows 7のhostsファイル
+C:\Windows\System32\drivers\etc\hosts
+
+●Windows Vistaのhostsファイル
+C:\Windows\System32\drivers\etc\hosts
+
+Macのhostsファイルは以下にあります。
+編集にはroot権限が必要です。
+
+/etc/hosts
+
+### シラサギへアクセス
 
 起動したら次のコマンドを実行すると、シラサギ開発環境にログインすることができます。
 
@@ -131,7 +142,7 @@ bundle exec unicorn_rails -c /var/www/shirasagi/config/unicorn.rb -E production 
 
 ### 企業サンプルサイト
 
-ブラウザで "http://192.168.33.10:3000/" にアクセスしてみてください。
+ブラウザで "company.example.jp:3000" にアクセスしてみてください。
 次のような企業サンプルサイトの画面が表示されるはずです。
 
 | 企業サンプル                             |
@@ -140,7 +151,7 @@ bundle exec unicorn_rails -c /var/www/shirasagi/config/unicorn.rb -E production 
 
 ### 子育て支援サンプルサイト
 
-ブラウザで "http://192.168.33.11:3000/" にアクセスしてみてください。
+ブラウザで "childcare.example.jp:3000" にアクセスしてみてください。
 次のような子育て支援サンプルサイトの画面が表示されるはずです。
 
 | 子育て支援サンプル                              |
@@ -149,7 +160,7 @@ bundle exec unicorn_rails -c /var/www/shirasagi/config/unicorn.rb -E production 
 
 ### オープンデータサンプルサイト
 
-ブラウザで "http://192.168.33.12:3000/" にアクセスしてみてください。
+ブラウザで "opendata.example.jp:3000" にアクセスしてみてください。
 次のようなオープンデータサンプルサイトの画面が表示されるはずです。
 
 | オープンデータ                                  |
@@ -158,7 +169,7 @@ bundle exec unicorn_rails -c /var/www/shirasagi/config/unicorn.rb -E production 
 
 ### LPサンプルサイト
 
-ブラウザで "http://192.168.33.13:3000/" にアクセスしてみてください。
+ブラウザで "lp.example.jp:3000" にアクセスしてみてください。
 次のようなLPサンプルサイトの画面が表示されるはずです。
 
 | LPサンプル                                  |
