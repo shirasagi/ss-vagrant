@@ -27,7 +27,7 @@ SHIRASAGI 開発用の Vagrant Box を使用するには次のいずれかの環
 
 | バージョン | 動作                       | ダウンロード |
 |------------|----------------------------|----------|
-| 2.2.0◎      |    未確認                     | |
+| 2.2.0◎      |    Windows/Mac ともに OK                     | |
 | 1.9.2    | Windows/Mac ともに OK      | [Win](https://releases.hashicorp.com/vagrant/1.9.2/vagrant_1.9.2.msi) / [Mac](https://releases.hashicorp.com/vagrant/1.9.2/vagrant_1.9.2.dmg) |
 | 1.9.0      | Windows/Mac ともに OK      | [Win](https://releases.hashicorp.com/vagrant/1.9.0/vagrant_1.9.0.msi) / [Mac](https://releases.hashicorp.com/vagrant/1.9.0/vagrant_1.9.0.dmg) |
 
@@ -40,6 +40,9 @@ SHIRASAGI 開発用の Vagrant Box を使用するには次のいずれかの環
 
 適当なディレクトリを作成し、次のような内容を持つ `Vagrantfile` を作成してください。
 
+    $ mkdir shirasagi-dev
+    $ cd shirasagi-dev
+    $ cat Vagrantfile
     Vagrant.configure(2) do |config|
       config.vm.box = "ss-vagrant-v1.9.1"
       config.vm.box_url = "https://github.com/shirasagi/ss-vagrant/releases/download/ss-vagrant-v1.9.1/ss-vagrant-virtualbox-x86_64.box"
@@ -56,13 +59,10 @@ SHIRASAGI 開発用の Vagrant Box を使用するには次のいずれかの環
 ### hosts ファイルの設定
 
 待っている間に、シラサギを使用するには hosts ファイルの設定が必要なため、ここからは hosts ファイルを設定していきます。
-
-hostsファイルの設定の方法
-
-    127.0.0.1 company.example.jp childcare.example.jp opendata.example.jp lp.example.jp
+hosts ファイルはメモ帳から開くことができます。
+その際メモ帳は管理者権限で開いてください。
 
 Windows の hosts ファイルは以下にあります。
-編集には管理者権限が必要です。
 
 * Windows 10 の hosts ファイル
 
@@ -80,12 +80,17 @@ Windows の hosts ファイルは以下にあります。
 
       C:\Windows\System32\drivers\etc\hosts
 
-Macのhostsファイルは以下にあります。
-編集にはroot権限が必要です。
+Mac の hosts ファイルは以下にあります。
+編集には root 権限が必要です。
 
 * Mac の hosts ファイル
 
       /etc/hosts
+
+hosts ファイルの設定の方法
+hosts ファイルが開けましたら以下の一行を入力してください。
+
+  127.0.0.1 company.example.jp childcare.example.jp opendata.example.jp lp.example.jp
 
 ### シラサギへアクセス
 
