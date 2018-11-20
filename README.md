@@ -27,7 +27,7 @@ SHIRASAGI 開発用の Vagrant Box を使用するには次のいずれかの環
 
 | バージョン | 動作                       | ダウンロード |
 |------------|----------------------------|----------|
-| 2.2.0◎      |    Windows/Mac ともに OK                     | |
+| 2.2.0◎      |    Windows/Mac ともに OK                     |[Win](https://releases.hashicorp.com/vagrant/1.9.0/vagrant_1.9.0.msi) / [Mac](https://releases.hashicorp.com/vagrant/1.9.0/vagrant_1.9.0.dmg) |
 | 1.9.2    | Windows/Mac ともに OK      | [Win](https://releases.hashicorp.com/vagrant/1.9.2/vagrant_1.9.2.msi) / [Mac](https://releases.hashicorp.com/vagrant/1.9.2/vagrant_1.9.2.dmg) |
 | 1.9.0      | Windows/Mac ともに OK      | [Win](https://releases.hashicorp.com/vagrant/1.9.0/vagrant_1.9.0.msi) / [Mac](https://releases.hashicorp.com/vagrant/1.9.0/vagrant_1.9.0.dmg) |
 
@@ -87,7 +87,6 @@ Mac の hosts ファイルは以下にあります。
 
       /etc/hosts
 
-hosts ファイルの設定の方法
 hosts ファイルが開けましたら以下の一行を入力してください。
 
   127.0.0.1 company.example.jp childcare.example.jp opendata.example.jp lp.example.jp

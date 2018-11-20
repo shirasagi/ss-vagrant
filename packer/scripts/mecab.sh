@@ -15,7 +15,7 @@ wget -O mecab-ruby-0.996.tar.gz 'https://drive.google.com/uc?id=0B4y35FiV1wh7VUN
 if [ $? -ne 0 ]; then
   exit 1
 fi
-3
+
 cd /usr/local/src
 tar xvzf mecab-0.996.tar.gz
 cd mecab-0.996
