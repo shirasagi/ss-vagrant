@@ -152,7 +152,7 @@ bundle exec unicorn_rails -c /var/www/shirasagi/config/unicorn.rb -E production 
 
 ### 企業サンプルサイト
 
-ブラウザで "company.example.jp:3000" にアクセスしてみてください。
+ブラウザで "http://company.example.jp:3000" にアクセスしてみてください。
 次のような企業サンプルサイトの画面が表示されるはずです。
 
 | 企業サンプル                             |
@@ -161,7 +161,7 @@ bundle exec unicorn_rails -c /var/www/shirasagi/config/unicorn.rb -E production 
 
 ### 子育て支援サンプルサイト
 
-ブラウザで "childcare.example.jp:3000" にアクセスしてみてください。
+ブラウザで "http://childcare.example.jp:3000" にアクセスしてみてください。
 次のような子育て支援サンプルサイトの画面が表示されるはずです。
 
 | 子育て支援サンプル                              |
@@ -170,7 +170,7 @@ bundle exec unicorn_rails -c /var/www/shirasagi/config/unicorn.rb -E production 
 
 ### オープンデータサンプルサイト
 
-ブラウザで "opendata.example.jp:3000" にアクセスしてみてください。
+ブラウザで "http://opendata.example.jp:3000" にアクセスしてみてください。
 次のようなオープンデータサンプルサイトの画面が表示されるはずです。
 
 | オープンデータ                                  |
@@ -179,7 +179,7 @@ bundle exec unicorn_rails -c /var/www/shirasagi/config/unicorn.rb -E production 
 
 ### LPサンプルサイト
 
-ブラウザで "lp.example.jp:3000" にアクセスしてみてください。
+ブラウザで "http://lp.example.jp:3000" にアクセスしてみてください。
 次のようなLPサンプルサイトの画面が表示されるはずです。
 
 | LPサンプル                                  |
