@@ -27,7 +27,7 @@ SHIRASAGI 開発用の Vagrant Box を使用するには次のいずれかの環
 
 | バージョン | 動作                       | ダウンロード |
 |------------|----------------------------|----------|
-| 2.2.0◎      |    Windows/Mac ともに OK                     |[Win 64bit](https://releases.hashicorp.com/vagrant/2.2.0/vagrant_2.2.0_x86_64.msi) / [Mac](https://releases.hashicorp.com/vagrant/2.2.0/vagrant_2.2.0_x86_64.dmg) |
+| 2.2.0◎      | Windows/Mac ともに OK                     |[Win 64bit](https://releases.hashicorp.com/vagrant/2.2.0/vagrant_2.2.0_x86_64.msi) / [Mac](https://releases.hashicorp.com/vagrant/2.2.0/vagrant_2.2.0_x86_64.dmg) |
 | 1.9.2    | Windows/Mac ともに OK      | [Win](https://releases.hashicorp.com/vagrant/1.9.2/vagrant_1.9.2.msi) / [Mac](https://releases.hashicorp.com/vagrant/1.9.2/vagrant_1.9.2.dmg) |
 | 1.9.0      | Windows/Mac ともに OK      | [Win](https://releases.hashicorp.com/vagrant/1.9.0/vagrant_1.9.0.msi) / [Mac](https://releases.hashicorp.com/vagrant/1.9.0/vagrant_1.9.0.dmg) |
 
@@ -45,7 +45,7 @@ SHIRASAGI 開発用の Vagrant Box を使用するには次のいずれかの環
     $ cat Vagrantfile
     Vagrant.configure(2) do |config|
       config.vm.box = "ss-vagrant-v1.9.1"
-      config.vm.box_url = "https://github.com/shirasagi/ss-vagrant/releases/download/ss-vagrant-v1.9.1/ss-vagrant-virtualbox-x86_64.box"
+      config.vm.box_url = "https://github.com/shirasagi/ss-vagrant/releases/download/v1.9.1/ss-vagrant-virtualbox-x86_64.box"
       config.vm.network "forwarded_port", guest: 3000, host: 3000
     end
 
@@ -58,8 +58,8 @@ SHIRASAGI 開発用の Vagrant Box を使用するには次のいずれかの環
 
 ### hosts ファイルの設定
 
-待っている間に、シラサギを使用するには hosts ファイルの設定が必要なため、ここからは hosts ファイルを設定していきます。
-hosts ファイルはメモ帳から開くことができます。
+待っている間に、シラサギを使用するには hosts ファイルの設定が必要なため、ここからは hosts ファイルを設定していきます。
+hosts ファイルはメモ帳から開くことができます。
 その際メモ帳は管理者権限で開いてください。
 
 Windows の hosts ファイルは以下にあります。
@@ -83,11 +83,11 @@ Windows の hosts ファイルは以下にあります。
 Mac の hosts ファイルは以下にあります。
 編集には root 権限が必要です。
 
-* Mac の hosts ファイル
+* Mac の hosts ファイル
 
       /etc/hosts
 
-hosts ファイルが開けましたら以下の一行を入力してください。
+hosts ファイルが開けましたら以下の一行を入力してください。
 
   127.0.0.1 company.example.jp childcare.example.jp opendata.example.jp lp.example.jp
 
