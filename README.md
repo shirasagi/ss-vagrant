@@ -64,19 +64,7 @@ hosts ファイルはメモ帳から開くことができます。
 
 Windows の hosts ファイルは以下にあります。
 
-* Windows 10 の hosts ファイル
-
-      C:\Windows\System32\drivers\etc\hosts
-
-* Windows 8 / Windows 8.1 の hosts ファイル
-
-      C:\Windows\System32\drivers\etc\hosts
-
-* Windows 7 の hosts ファイル
-
-      C:\Windows\System32\drivers\etc\hosts
-
-* Windows Vista の hosts ファイル
+* Windows の hosts ファイル
 
       C:\Windows\System32\drivers\etc\hosts
 
