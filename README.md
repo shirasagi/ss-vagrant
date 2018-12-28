@@ -45,7 +45,7 @@ SHIRASAGI 開発用の Vagrant Box を使用するには次のいずれかの環
     $ cat Vagrantfile
     Vagrant.configure(2) do |config|
       config.vm.box = "ss-vagrant-v1.10.0"
-      config.vm.box_url = "https://github.com/shirasagi/ss-vagrant/releases/download/v1.9.1/ss-vagrant-virtualbox-x86_64.box"
+      config.vm.box_url = "https://github.com/shirasagi/ss-vagrant/releases/download/v1.10.0/ss-vagrant-virtualbox-x86_64.box"
       config.vm.network "forwarded_port", guest: 3000, host: 3000
     end
 
