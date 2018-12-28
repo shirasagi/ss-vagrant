@@ -19,7 +19,6 @@ SHIRASAGI 開発用の Vagrant Box を使用するには次のいずれかの環
 * [Vagrant](https://www.vagrantup.com/):
   * [ダウンロード](https://www.vagrantup.com/downloads.html) から各環境に応じたインストーラーをダウンロードし、インストーラーを実行してください。
   * インストーラー実行後は、インストーラーの指示にしたがってインストールを完了させてください。
-  * 最新版の 1.9.4, 1.9.3 では正常に起動しません。1.9.2 をインストールしてください。
 
 ### 動作確認のとれた vagrant バージョン
 
@@ -47,6 +46,7 @@ SHIRASAGI 開発用の Vagrant Box を使用するには次のいずれかの環
       config.vm.box = "ss-vagrant-v1.10.0"
       config.vm.box_url = "https://github.com/shirasagi/ss-vagrant/releases/download/v1.10.0/ss-vagrant-virtualbox-x86_64.box"
       config.vm.network "forwarded_port", guest: 3000, host: 3000
+      config.vm.network "private_network", ip: "192.168.33.10"
     end
 
 次のコマンドを実行してください。シラサギ開発環境が起動します。
