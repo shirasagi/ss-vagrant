@@ -5,7 +5,7 @@ if [ $? -ne 0 ]; then
 fi
 
 curl -sSLo rvm-installer https://raw.githubusercontent.com/rvm/rvm/1.29.4/binscripts/rvm-installer
-sudo bash rvm-installer --version 1.29.4 --ruby=2.4.6
+sudo bash rvm-installer --version 1.29.4 --ruby=2.6.3
 
 echo "gem: --no-ri --no-rdoc" >> /home/$SUDO_USER/.gemrc
 echo "install: --no-document" >> /home/$SUDO_USER/.gemrc

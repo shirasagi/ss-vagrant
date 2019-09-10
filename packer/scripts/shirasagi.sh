@@ -3,7 +3,7 @@ yum -y install git wget ImageMagick ImageMagick-devel
 mkdir -p /var/www/
 git clone https://github.com/shirasagi/shirasagi /var/www/shirasagi
 cd /var/www/shirasagi
-git checkout -b v1.11.1 refs/tags/v1.11.1
+git checkout -b v1.12.0 refs/tags/v1.12.0
 chown -R $SUDO_USER:$SUDO_USER /var/www/shirasagi
 
 cd $HOME && cat << _EOT_ | sudo -u $SUDO_USER bash
