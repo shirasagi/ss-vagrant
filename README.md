@@ -283,7 +283,7 @@ bundle exec unicorn_rails -c /var/www/shirasagi/config/unicorn.rb -E production 
 * CentOS 7.7.1908 (2019-12-16 時点での最新)
 * MongoDB 3.4.14
 * RVM 1.29.4
-* Ruby 2.4.4p296
+* Ruby 2.6.3p62
 * SHIRASAGI のソース一式 (v1.12.2)
 
 ### Vagrant Box のビルド方法
