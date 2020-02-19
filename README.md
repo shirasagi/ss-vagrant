@@ -251,6 +251,21 @@ bundle exec unicorn_rails -c /var/www/shirasagi/config/unicorn.rb -E production 
       default: Warning: Connection timeout. Retrying...
   ```
 
+* 次のように Failed to attach the network LUN (VERR_INTNET_FLT_IF_NOT_FOUND) が表示される場合、[VirtualBox で Failed to open/create the internal network 'HostInterfaceNetworking-VirtualBox Host-Only Ethernet Adapter' が出た時の対処](https://qiita.com/ExA_DEV/items/ae80a7d767144c2e1992)を参照し、ネットワークアダプターの設定を確認してみてください。
+
+  ```
+  Stderr: VBoxManage.exe: error: Failed to open/create the internal network 'HostInterfaceNetworking-VirtualBox Host-Only Ethernet Adapter #2' (VERR_INTNET_FLT_IF_NOT_FOUND).
+  VBoxManage.exe: error: Failed to attach the network LUN (VERR_INTNET_FLT_IF_NOT_FOUND)
+  VBoxManage.exe: error: Details: code E_FAIL (0x80004005), component ConsoleWrap, interface IConsole
+  ```
+
+* 次のように Appliance import failed が表示される場合、ディスクの空き容量が十分にあるかどうかを確認してみてください。それでも解決しないようなら [Vagrant: 自分のミスで仮想マシン作成に失敗していた](http://sutara79.hatenablog.com/entry/2015/06/28/104150)を参照し、VirtualBox のデフォルトの仮想マシンフォルダーが存在しているかどうかを確認してみてください。
+
+  ```
+  Progress state: VBOX_E_IPRT_ERROR
+  VBoxManage.exe: error: Appliance import failed
+  ```
+
 以上で問題が解決しない方は[シラサギプロジェクト開発コミュニティ](https://www.facebook.com/groups/ssproj/)で質問してください。
 
 ### Mac
