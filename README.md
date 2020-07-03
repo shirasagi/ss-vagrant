@@ -38,8 +38,8 @@ SHIRASAGI 開発用の Vagrant Box を使用するには次のいずれかの環
     $ cd shirasagi-dev
     $ cat Vagrantfile
     Vagrant.configure(2) do |config|
-      config.vm.box = "ss-vagrant-v1.13.0"
-      config.vm.box_url = "https://github.com/shirasagi/ss-vagrant/releases/download/v1.13.0/ss-vagrant-virtualbox-x86_64.box"
+      config.vm.box = "ss-vagrant-v1.13.2"
+      config.vm.box_url = "https://github.com/shirasagi/ss-vagrant/releases/download/v1.13.2/ss-vagrant-virtualbox-x86_64.box"
       config.vm.network "forwarded_port", guest: 3000, host: 3000
       config.vm.network "private_network", ip: "192.168.33.10"
     end
@@ -299,7 +299,7 @@ bundle exec unicorn_rails -c /var/www/shirasagi/config/unicorn.rb -E production 
 * MongoDB 3.4.14
 * RVM 1.29.4
 * Ruby 2.6.3p62
-* SHIRASAGI のソース一式 (v1.13.0)
+* SHIRASAGI のソース一式 (v1.13.2)
 
 ### Vagrant Box のビルド方法
 
