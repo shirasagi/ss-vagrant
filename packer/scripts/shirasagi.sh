@@ -70,3 +70,8 @@ cd /etc/ImageMagick && cat << _EOT_ | patch
 +  <policy domain="coder" rights="read | write" pattern="PNG" />
  </policymap>
 _EOT_
+
+cat << _EOT_ | tee /etc/profile.d/shirasagi_env.sh
+export DEVELOPMENT_LOG_LEVEL=debug
+export TEST_LOG_LEVEL=debug
+_EOT_
