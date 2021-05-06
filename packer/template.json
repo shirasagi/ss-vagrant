@@ -1,24 +1,147 @@
 {
-  "variables": {
-    "os": "centos7",
-    "guest_os_type": "RedHat_64",
-    "iso_url": "http://ftp.iij.ad.jp/pub/linux/centos/7.7.1908/isos/x86_64/CentOS-7-x86_64-Minimal-1908.iso",
-    "iso_checksum": "a9a2d9da68f09d8f0707ccd6453b19b37ca70956",
-    "iso_checksum_type": "sha1",
-    "memory": "1536",
-    "arch": "x86_64"
-  },
+  "builders": [
+    {
+      "boot_command": [
+        "<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks.cfg<enter><wait>"
+      ],
+      "boot_wait": "10s",
+      "disk_size": 15195,
+      "guest_additions_path": "VBoxGuestAdditions_{{.Version}}.iso",
+      "guest_os_type": "{{user `guest_os_type`}}",
+      "http_directory": "http",
+      "iso_checksum": "{{user `iso_checksum_type`}}:{{user `iso_checksum`}}",
+      "iso_url": "{{user `iso_url`}}",
+      "shutdown_command": "echo '/sbin/halt -h -p' > /tmp/shutdown.sh; echo 'vagrant'|sudo -S sh '/tmp/shutdown.sh'",
+      "ssh_password": "vagrant",
+      "ssh_port": 22,
+      "ssh_pty": true,
+      "ssh_timeout": "10000s",
+      "ssh_username": "vagrant",
+      "type": "virtualbox-iso",
+      "vboxmanage": [
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--memory",
+          "{{user `memory`}}"
+        ],
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--cpus",
+          "1"
+        ]
+      ],
+      "virtualbox_version_file": ".vbox_version"
+    },
+    {
+      "boot_command": [
+        "<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks.cfg<enter><wait>"
+      ],
+      "boot_wait": "10s",
+      "disk_size": 15195,
+      "guest_os_type": "{{user `guest_os_type`}}",
+      "http_directory": "http",
+      "iso_checksum": "sha1:{{user `iso_checksum`}}",
+      "iso_url": "{{user `iso_url`}}",
+      "shutdown_command": "echo '/sbin/halt -h -p' > /tmp/shutdown.sh; echo 'vagrant'|sudo -S sh '/tmp/shutdown.sh'",
+      "ssh_password": "vagrant",
+      "ssh_port": 22,
+      "ssh_pty": true,
+      "ssh_timeout": "10000s",
+      "ssh_username": "vagrant",
+      "tools_upload_flavor": "linux",
+      "type": "vmware-iso",
+      "vmx_data": {
+        "cpuid.coresPerSocket": "1",
+        "memsize": "{{user `memory`}}",
+        "numvcpus": "1"
+      }
+    },
+    {
+      "ami_block_device_mappings": [
+        {
+          "delete_on_termination": true,
+          "device_name": "/dev/xvda",
+          "volume_size": 15,
+          "volume_type": "gp2"
+        },
+        {
+          "device_name": "/dev/sdb",
+          "virtual_name": "ephemeral0"
+        },
+        {
+          "device_name": "/dev/sdc",
+          "virtual_name": "ephemeral1"
+        }
+      ],
+      "ami_description": "This is SHIRASAGI AMI based on Amazon Linux AMI 2015.03 (HVM), SSD Volume Type (ami-cbf90ecb).",
+      "ami_name": "webtips-shirasagi-handon-ami-{{isotime \"2006-01-02\"}}",
+      "instance_type": "t2.micro",
+      "launch_block_device_mappings": [
+        {
+          "delete_on_termination": true,
+          "device_name": "/dev/xvda",
+          "volume_size": 15,
+          "volume_type": "gp2"
+        },
+        {
+          "device_name": "/dev/sdb",
+          "virtual_name": "ephemeral0"
+        },
+        {
+          "device_name": "/dev/sdc",
+          "virtual_name": "ephemeral1"
+        }
+      ],
+      "region": "ap-northeast-1",
+      "source_ami": "ami-cbf90ecb",
+      "ssh_pty": true,
+      "ssh_timeout": "5m",
+      "ssh_username": "ec2-user",
+      "type": "amazon-ebs"
+    }
+  ],
+  "post-processors": [
+    {
+      "override": {
+        "virtualbox": {
+          "output": "ss-vagrant-virtualbox-{{user `arch`}}.box"
+        },
+        "vmware": {
+          "output": "ss-vagrant-vmware-{{user `arch`}}.box"
+        }
+      },
+      "type": "vagrant"
+    }
+  ],
   "provisioners": [
     {
-      "type": "shell",
-      "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S bash '{{.Path}}'",
       "environment_vars": [
         "os={{user `os`}}",
         "arch={{user `arch`}}"
       ],
+      "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S bash '{{.Path}}'",
       "expect_disconnect": true,
-      "pause_before": "10s",
       "override": {
+        "amazon-ebs": {
+          "scripts": [
+            "scripts/update.sh",
+            "scripts/base.sh",
+            "scripts/aws.sh",
+            "scripts/rvm-ruby.sh",
+            "scripts/bundler.sh",
+            "scripts/mongo.sh",
+            "scripts/mecab.sh",
+            "scripts/open_jtalk.sh",
+            "scripts/shirasagi.sh",
+            "scripts/heroku.sh",
+            "scripts/disable-firewall.sh",
+            "scripts/disable-ipv6.sh",
+            "scripts/extra-package.sh",
+            "scripts/cleanup.sh"
+          ]
+        },
         "virtualbox-iso": {
           "scripts": [
             "scripts/fix-slow-dns.sh",
@@ -61,112 +184,20 @@
             "scripts/cleanup.sh",
             "scripts/zerodisk.sh"
           ]
-        },
-        "amazon-ebs": {
-          "scripts": [
-            "scripts/update.sh",
-            "scripts/base.sh",
-            "scripts/aws.sh",
-            "scripts/rvm-ruby.sh",
-            "scripts/bundler.sh",
-            "scripts/mongo.sh",
-            "scripts/mecab.sh",
-            "scripts/open_jtalk.sh",
-            "scripts/shirasagi.sh",
-            "scripts/heroku.sh",
-            "scripts/disable-firewall.sh",
-            "scripts/disable-ipv6.sh",
-            "scripts/extra-package.sh",
-            "scripts/cleanup.sh"
-          ]
         }
-      }
+      },
+      "pause_before": "10s",
+      "type": "shell"
     }
   ],
-  "post-processors": [
-    {
-      "type": "vagrant",
-      "override": {
-        "virtualbox": {
-          "output": "ss-vagrant-virtualbox-{{user `arch`}}.box"
-        },
-        "vmware": {
-          "output": "ss-vagrant-vmware-{{user `arch`}}.box"
-        }
-      }
-    }
-  ],
-  "builders": [
-    {
-      "type": "virtualbox-iso",
-      "boot_command": [
-        "<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks.cfg<enter><wait>"
-      ],
-      "boot_wait": "10s",
-      "disk_size": 15195,
-      "guest_os_type": "{{user `guest_os_type`}}",
-      "http_directory": "http",
-      "iso_checksum": "{{user `iso_checksum`}}",
-      "iso_checksum_type": "{{user `iso_checksum_type`}}",
-      "iso_url": "{{user `iso_url`}}",
-      "ssh_username": "vagrant",
-      "ssh_password": "vagrant",
-      "ssh_port": 22,
-      "ssh_wait_timeout": "10000s",
-      "ssh_pty": true,
-      "shutdown_command": "echo '/sbin/halt -h -p' > /tmp/shutdown.sh; echo 'vagrant'|sudo -S sh '/tmp/shutdown.sh'",
-      "guest_additions_path": "VBoxGuestAdditions_{{.Version}}.iso",
-      "virtualbox_version_file": ".vbox_version",
-      "vboxmanage": [
-        [ "modifyvm", "{{.Name}}", "--memory", "{{user `memory`}}" ],
-        [ "modifyvm", "{{.Name}}", "--cpus", "1" ]
-      ]
-    },
-    {
-      "type": "vmware-iso",
-      "boot_command": [
-        "<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks.cfg<enter><wait>"
-      ],
-      "boot_wait": "10s",
-      "disk_size": 15195,
-      "guest_os_type": "{{user `guest_os_type`}}",
-      "http_directory": "http",
-      "iso_checksum": "{{user `iso_checksum`}}",
-      "iso_checksum_type": "sha1",
-      "iso_url": "{{user `iso_url`}}",
-      "ssh_username": "vagrant",
-      "ssh_password": "vagrant",
-      "ssh_port": 22,
-      "ssh_wait_timeout": "10000s",
-      "ssh_pty": true,
-      "shutdown_command": "echo '/sbin/halt -h -p' > /tmp/shutdown.sh; echo 'vagrant'|sudo -S sh '/tmp/shutdown.sh'",
-      "tools_upload_flavor": "linux",
-      "vmx_data": {
-        "memsize": "{{user `memory`}}",
-        "numvcpus": "1",
-        "cpuid.coresPerSocket": "1"
-      }
-    },
-    {
-      "type": "amazon-ebs",
-      "region": "ap-northeast-1",
-      "source_ami": "ami-cbf90ecb",
-      "instance_type": "t2.micro",
-      "ssh_username": "ec2-user",
-      "ssh_timeout": "5m",
-      "ssh_pty": true,
-      "ami_name": "webtips-shirasagi-handon-ami-{{isotime \"2006-01-02\"}}",
-      "ami_description": "This is SHIRASAGI AMI based on Amazon Linux AMI 2015.03 (HVM), SSD Volume Type (ami-cbf90ecb).",
-      "ami_block_device_mappings": [
-        { "device_name": "/dev/xvda", "volume_size": 15, "volume_type": "gp2", "delete_on_termination": true },
-        { "device_name": "/dev/sdb", "virtual_name": "ephemeral0" },
-        { "device_name": "/dev/sdc", "virtual_name": "ephemeral1" }
-      ],
-      "launch_block_device_mappings": [
-        { "device_name": "/dev/xvda", "volume_size": 15, "volume_type": "gp2", "delete_on_termination": true },
-        { "device_name": "/dev/sdb", "virtual_name": "ephemeral0" },
-        { "device_name": "/dev/sdc", "virtual_name": "ephemeral1" }
-      ]
-    }
-  ]
+  "variables": {
+    "arch": "x86_64",
+    "guest_os_type": "RedHat_64",
+    "iso_checksum": "07b94e6b1a0b0260b94c83d6bb76b26bf7a310dc78d7a9c7432809fb9bc6194a",
+    "iso_checksum_type": "sha256",
+    "iso_url": "https://ftp.iij.ad.jp/pub/linux/centos/7.9.2009/isos/x86_64/CentOS-7-x86_64-Minimal-2009.iso",
+    "memory": "1536",
+    "os": "centos7"
+  }
 }
+
