@@ -3,7 +3,7 @@ yum -y install git wget ImageMagick ImageMagick-devel
 mkdir -p /var/www/
 git clone https://github.com/shirasagi/shirasagi /var/www/shirasagi
 cd /var/www/shirasagi
-git checkout -b v1.13.2 refs/tags/v1.13.2
+git checkout -b v1.14.1 refs/tags/v1.14.1
 chown -R $SUDO_USER:$SUDO_USER /var/www/shirasagi
 
 cd $HOME && cat << _EOT_ | sudo -u $SUDO_USER bash
@@ -56,17 +56,17 @@ _EOT_
 
 # modify ImageMagick policy to work with simple captcha
 # see: https://github.com/diaspora/diaspora/issues/6828
-cd /etc/ImageMagick && cat << _EOT_ | patch
---- policy.xml.orig     2016-12-08 13:50:47.344009000 +0900
-+++ policy.xml  2016-12-08 13:15:22.529009000 +0900
-@@ -67,6 +67,8 @@
-   <policy domain="coder" rights="none" pattern="MVG" />
-   <policy domain="coder" rights="none" pattern="MSL" />
-   <policy domain="coder" rights="none" pattern="TEXT" />
--  <policy domain="coder" rights="none" pattern="LABEL" />
-+  <!-- <policy domain="coder" rights="none" pattern="LABEL" /> -->
-   <policy domain="path" rights="none" pattern="@*" />
-+  <policy domain="coder" rights="read | write" pattern="JPEG" />
-+  <policy domain="coder" rights="read | write" pattern="PNG" />
- </policymap>
-_EOT_
+#cd /etc/ImageMagick && cat << _EOT_ | patch
+#--- policy.xml.orig     2016-12-08 13:50:47.344009000 +0900
+#+++ policy.xml  2016-12-08 13:15:22.529009000 +0900
+#@@ -67,6 +67,8 @@
+#   <policy domain="coder" rights="none" pattern="MVG" />
+#   <policy domain="coder" rights="none" pattern="MSL" />
+#   <policy domain="coder" rights="none" pattern="TEXT" />
+#-  <policy domain="coder" rights="none" pattern="LABEL" />
+#+  <!-- <policy domain="coder" rights="none" pattern="LABEL" /> -->
+#   <policy domain="path" rights="none" pattern="@*" />
+#+  <policy domain="coder" rights="read | write" pattern="JPEG" />
+#+  <policy domain="coder" rights="read | write" pattern="PNG" />
+# </policymap>
+#_EOT_

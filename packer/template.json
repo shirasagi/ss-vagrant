@@ -2,9 +2,8 @@
   "variables": {
     "os": "centos7",
     "guest_os_type": "RedHat_64",
-    "iso_url": "http://ftp.iij.ad.jp/pub/linux/centos/7.7.1908/isos/x86_64/CentOS-7-x86_64-Minimal-1908.iso",
-    "iso_checksum": "a9a2d9da68f09d8f0707ccd6453b19b37ca70956",
-    "iso_checksum_type": "sha1",
+    "iso_url": "http://ftp.iij.ad.jp/pub/linux/centos/7.9.2009/isos/x86_64/CentOS-7-x86_64-Minimal-2009.iso",
+    "iso_checksum": "07b94e6b1a0b0260b94c83d6bb76b26bf7a310dc78d7a9c7432809fb9bc6194a",
     "memory": "1536",
     "arch": "x86_64"
   },
@@ -107,7 +106,6 @@
       "guest_os_type": "{{user `guest_os_type`}}",
       "http_directory": "http",
       "iso_checksum": "{{user `iso_checksum`}}",
-      "iso_checksum_type": "{{user `iso_checksum_type`}}",
       "iso_url": "{{user `iso_url`}}",
       "ssh_username": "vagrant",
       "ssh_password": "vagrant",
@@ -132,7 +130,6 @@
       "guest_os_type": "{{user `guest_os_type`}}",
       "http_directory": "http",
       "iso_checksum": "{{user `iso_checksum`}}",
-      "iso_checksum_type": "sha1",
       "iso_url": "{{user `iso_url`}}",
       "ssh_username": "vagrant",
       "ssh_password": "vagrant",

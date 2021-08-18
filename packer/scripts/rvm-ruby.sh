@@ -1,9 +1,6 @@
 # install rvm & ruby
-gpg2 --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
-if [ $? -ne 0 ]; then
-  gpg2 --keyserver hkp://pgp.mit.edu --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
-fi
-
+curl -sSL https://rvm.io/pkuczynski.asc | gpg --import -
+curl -sSL https://rvm.io/mpapis.asc | gpg --import -
 curl -sSLo rvm-installer https://raw.githubusercontent.com/rvm/rvm/1.29.4/binscripts/rvm-installer
 sudo bash rvm-installer --version 1.29.4 --ruby=2.6.3
 
