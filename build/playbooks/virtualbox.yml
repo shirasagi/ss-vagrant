@@ -1,0 +1,14 @@
+- name: get VirtualBox version
+  shell: cat /home/vagrant/.vbox_version
+  register: vbox_version
+- name: install VirtualBox Guest Additions
+  shell: |
+    wget http://download.virtualbox.org/virtualbox/{{ vbox_version.stdout }}/VBoxGuestAdditions_{{ vbox_version.stdout }}.iso
+    mount -o loop /tmp/VBoxGuestAdditions_{{ vbox_version.stdout }}.iso /mnt
+    sh /mnt/VBoxLinuxAdditions.run --nox11
+    umount /mnt
+    rm -rf /tmp/VBoxGuestAdditions_*.iso
+  become: yes
+  args:
+    chdir: /tmp
+    creates: /opt/VBoxGuestAdditions-{{ vbox_version.stdout }}/init/vboxadd

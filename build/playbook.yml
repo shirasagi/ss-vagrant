@@ -1,0 +1,12 @@
+- name: Shirasagi Setup
+  hosts: all
+  vars:
+    ruby_series: 2.7.0
+    ruby_version: 2.7.5
+    shirasagi_version: stable
+  tasks:
+    - include_tasks: playbooks/base.yml
+    - include_tasks: playbooks/virtualbox.yml
+    - include_tasks: playbooks/mongo.yml
+    - include_tasks: playbooks/ruby.yml
+    - include_tasks: playbooks/shirasagi.yml

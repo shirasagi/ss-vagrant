@@ -1,0 +1,83 @@
+- name: change /usr/local/src permission
+  file:
+    path: /usr/local/src
+    mode: '0777'
+  become: yes
+- name: download hts_engine_API-1.08
+  shell: wget -O hts_engine_API-1.08.tar.gz http://downloads.sourceforge.net/hts-engine/hts_engine_API-1.08.tar.gz
+  args:
+    chdir: /usr/local/src
+    creates: /usr/local/src/hts_engine_API-1.08.tar.gz
+- name: extract hts_engine_API-1.08
+  shell: tar xvf hts_engine_API-1.08.tar.gz
+  args:
+    chdir: /usr/local/src
+    creates: /usr/local/src/hts_engine_API-1.08/COPYING
+- name: configure hts_engine_API-1.08
+  shell: ./configure
+  args:
+    chdir: /usr/local/src/hts_engine_API-1.08
+    creates: /usr/local/src/hts_engine_API-1.08/Makefile
+- name: make hts_engine_API-1.08
+  shell: make
+  args:
+    chdir: /usr/local/src/hts_engine_API-1.08
+    creates: /usr/local/src/hts_engine_API-1.08/lib/libHTSEngine.a
+- name: install hts_engine_API-1.08
+  shell: make install
+  args:
+    chdir: /usr/local/src/hts_engine_API-1.08
+    creates: /usr/local/lib/libHTSEngine.a
+  become: yes
+- name: download open_jtalk-1.07
+  shell: wget -O open_jtalk-1.07.tar.gz http://downloads.sourceforge.net/open-jtalk/open_jtalk-1.07.tar.gz
+  args:
+    chdir: /usr/local/src
+    creates: /usr/local/src/open_jtalk-1.07.tar.gz
+- name: extract open_jtalk-1.07
+  shell: tar xvf open_jtalk-1.07.tar.gz
+  args:
+    chdir: /usr/local/src
+    creates: /usr/local/src/open_jtalk-1.07/COPYING
+- name: configure open_jtalk-1.07
+  shell: ./configure --with-charset=UTF-8
+  args:
+    chdir: /usr/local/src/open_jtalk-1.07
+    creates: /usr/local/src/open_jtalk-1.07/Makefile
+- name: make open_jtalk-1.07
+  shell: make
+  args:
+    chdir: /usr/local/src/open_jtalk-1.07
+    creates: /usr/local/src/open_jtalk-1.07/bin/open_jtalk
+- name: install open_jtalk-1.07
+  shell: make install
+  args:
+    chdir: /usr/local/src/open_jtalk-1.07
+    creates: /usr/local/bin/open_jtalk
+  become: yes
+- name: download lame-3.99.5
+  shell: wget -O lame-3.99.5.tar.gz http://downloads.sourceforge.net/lame/lame-3.99.5.tar.gz
+  args:
+    chdir: /usr/local/src
+    creates: /usr/local/src/lame-3.99.5.tar.gz
+- name: extract lame-3.99.5
+  shell: tar xvf lame-3.99.5.tar.gz
+  args:
+    chdir: /usr/local/src
+    creates: /usr/local/src/lame-3.99.5/COPYING
+- name: configure lame-3.99.5
+  shell: ./configure
+  args:
+    chdir: /usr/local/src/lame-3.99.5
+    creates: /usr/local/src/lame-3.99.5/Makefile
+- name: make lame-3.99.5
+  shell: make
+  args:
+    chdir: /usr/local/src/lame-3.99.5
+    creates: /usr/local/src/lame-3.99.5/frontend/lame
+- name: install lame-3.99.5
+  shell: make install
+  args:
+    chdir: /usr/local/src/lame-3.99.5
+    creates: /usr/local/bin/lame
+  become: yes

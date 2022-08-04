@@ -1,0 +1,16 @@
+- name: setup mongodb repo
+  copy:
+    src: mongodb-org-4.4.repo
+    dest: /etc/yum.repos.d/mongodb-org-4.4.repo
+    owner: root
+  become: yes
+- name: install mongodb
+  yum:
+    name: mongodb-org
+  become: yes
+- name: start mongodb
+  service:
+    name: mongod
+    state: started
+    enabled: yes
+  become: yes

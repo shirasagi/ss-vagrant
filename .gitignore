@@ -1,3 +1,4 @@
+build/.vagrant
 packer/packer_cache
 packer/*.box
 packer/*.log

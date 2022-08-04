@@ -1,0 +1,82 @@
+- name: change /usr/local/src permission
+  file:
+    path: /usr/local/src
+    mode: '0777'
+  become: yes
+- name: download mecab-0.996
+  shell: wget -O mecab-0.996.tar.gz 'https://drive.google.com/uc?export=download&id=0B4y35FiV1wh7cENtOXlicTFaRUE'
+  args:
+    chdir: /usr/local/src
+    creates: /usr/local/src/mecab-0.996.tar.gz
+- name: extract mecab-0.996
+  shell: tar xvf mecab-0.996.tar.gz
+  args:
+    chdir: /usr/local/src
+    creates: /usr/local/src/mecab-0.996/COPYING
+- name: configure mecab-0.996
+  shell: ./configure --enable-utf8-only
+  args:
+    chdir: /usr/local/src/mecab-0.996
+    creates: /usr/local/src/mecab-0.996/Makefile
+- name: make mecab-0.996
+  shell: make
+  args:
+    chdir: /usr/local/src/mecab-0.996
+    creates: /usr/local/src/mecab-0.996/src/.libs/mecab
+- name: install mecab-0.996
+  shell: make install
+  args:
+    chdir: /usr/local/src/mecab-0.996
+    creates: /usr/local/bin/mecab
+  become: yes
+- name: download mecab-ipadic-2.7.0-20070801
+  shell: wget -O mecab-ipadic-2.7.0-20070801.tar.gz 'https://drive.google.com/uc?id=0B4y35FiV1wh7MWVlSDBCSXZMTXM&authuser=0&export=download'
+  args:
+    chdir: /usr/local/src
+    creates: /usr/local/src/mecab-ipadic-2.7.0-20070801.tar.gz
+- name: extract mecab-ipadic-2.7.0-20070801
+  shell: tar xvf mecab-ipadic-2.7.0-20070801.tar.gz
+  args:
+    chdir: /usr/local/src
+    creates: /usr/local/src/mecab-ipadic-2.7.0-20070801/COPYING
+- name: configure mecab-ipadic-2.7.0-20070801
+  shell: ./configure --with-charset=UTF-8
+  args:
+    chdir: /usr/local/src/mecab-ipadic-2.7.0-20070801
+    creates: /usr/local/src/mecab-ipadic-2.7.0-20070801/Makefile
+- name: make mecab-ipadic-2.7.0-20070801
+  shell: make
+  args:
+    chdir: /usr/local/src/mecab-ipadic-2.7.0-20070801
+    creates: /usr/local/src/mecab-ipadic-2.7.0-20070801/sys.dic
+- name: install mecab-ipadic-2.7.0-20070801
+  shell: make install
+  args:
+    chdir: /usr/local/src/mecab-ipadic-2.7.0-20070801
+    creates: /usr/local/lib/mecab/dic/ipadic/sys.dic
+  become: yes
+- name: download mecab-ruby-0.996
+  shell: wget -O mecab-ruby-0.996.tar.gz 'https://drive.google.com/uc?id=0B4y35FiV1wh7VUNlczBWVDZJbE0&authuser=0&export=download'
+  args:
+    chdir: /usr/local/src
+    creates: /usr/local/src/mecab-ruby-0.996.tar.gz
+- name: extract mecab-ruby-0.996
+  shell: tar xvf mecab-ruby-0.996.tar.gz
+  args:
+    chdir: /usr/local/src
+    creates: /usr/local/src/mecab-ruby-0.996/COPYING
+- name: configure mecab-ruby-0.996
+  shell: /home/vagrant/.rvm/wrappers/ruby-{{ruby_version}}/ruby extconf.rb
+  args:
+    chdir: /usr/local/src/mecab-ruby-0.996
+    creates: /usr/local/src/mecab-ruby-0.996/Makefile
+- name: make mecab-ruby-0.996
+  shell: make
+  args:
+    chdir: /usr/local/src/mecab-ruby-0.996
+    creates: /usr/local/src/mecab-ruby-0.996/MeCab.so
+- name: install mecab-ruby-0.996
+  shell: make install
+  args:
+    chdir: /usr/local/src/mecab-ruby-0.996
+    creates: /home/vagrant/.rvm/rubies/ruby-{{ruby_version}}/lib/ruby/site_ruby/{{ruby_series}}/x86_64-linux/MeCab.so

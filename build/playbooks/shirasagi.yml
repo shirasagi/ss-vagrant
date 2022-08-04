@@ -1,0 +1,191 @@
+- include_tasks: mecab.yml
+- include_tasks: open_jtalk.yml
+- name: clone shirasagi
+  git:
+    repo: https://github.com/shirasagi/shirasagi
+    dest: /home/vagrant/shirasagi
+    version: "{{shirasagi_version}}"
+- name: bundle install
+  shell: /home/vagrant/.rvm/wrappers/ruby-{{ruby_version}}/bundle install --without development test
+  args:
+    chdir: /home/vagrant/shirasagi
+    creates: "/home/vagrant/shirasagi/.bundle/config"
+- name: copy sample configurations
+  shell: cp -n config/samples/{mongoid.yml,unicorn.rb} config/
+  args:
+    chdir: /home/vagrant/shirasagi
+    creates: /home/vagrant/shirasagi/config/unicorn.rb
+- name: generate seccrets
+  shell: |
+    sed -e "s/dbcae379.*$/$(/home/vagrant/.rvm/wrappers/ruby-{{ruby_version}}/bundle exec rake secret)/" config/samples/secrets.yml > config/secrets.yml
+  args:
+    chdir: /home/vagrant/shirasagi
+    creates: /home/vagrant/shirasagi/config/secrets.yml
+- name: enable recommendation
+  shell: |
+    sed -e "s/disable: true$/disable: false/" config/defaults/recommend.yml > config/recommend.yml
+  args:
+    chdir: /home/vagrant/shirasagi
+    creates: /home/vagrant/shirasagi/config/recommend.yml
+- name: enable voice
+  shell: |
+    cp config/defaults/voice.yml config/voice.yml
+    sed -ie "s#sox: /usr/local/bin/sox#sox: $(which sox)#" config/voice.yml
+  args:
+    chdir: /home/vagrant/shirasagi
+    creates: /home/vagrant/shirasagi/config/voice.yml
+- shell: |
+    mongo --quiet --eval 'db.adminCommand({ listDatabases: 1 })' 127.0.0.1 | jq -r '.databases | map(select(.name == "ss")) | .[].name'
+  args:
+    chdir: /home/vagrant/shirasagi
+  register: database_existance
+  ignore_errors: yes
+- name: create database
+  shell: |
+    /home/vagrant/.rvm/wrappers/ruby-{{ruby_version}}/bundle exec rake db:create_indexes
+  args:
+    chdir: /home/vagrant/shirasagi
+  when: database_existance.stdout == ""
+- shell: |
+    mongo --quiet --eval 'db.ss_sites.find({ host: "www" }, { host: 1 })' 127.0.0.1/ss | jq -r .host
+  register: site_www_existance
+  ignore_errors: yes
+  args:
+    chdir: /home/vagrant/shirasagi
+- name: 'create site "自治体サンプル"'
+  shell: |
+    /home/vagrant/.rvm/wrappers/ruby-{{ruby_version}}/bundle exec rake ss:create_site data='{ name: "自治体サンプル", host: "www", domains: "localhost:3000", map_api: "openlayers" }'
+  when: site_www_existance.stdout == ""
+  args:
+    chdir: /home/vagrant/shirasagi
+- shell: |
+    mongo --quiet --eval 'db.ss_sites.find({ host: "company" }, { host: 1 })' 127.0.0.1/ss | jq -r .host
+  register: site_company_existance
+  ignore_errors: yes
+  args:
+    chdir: /home/vagrant/shirasagi
+- name: 'create site "企業サンプル"'
+  shell: |
+    /home/vagrant/.rvm/wrappers/ruby-{{ruby_version}}/bundle exec rake ss:create_site data='{ name: "企業サンプル", host: "company", domains: "company.example.jp:3000 192.168.33.10:3000", map_api: "openlayers" }'
+  when: site_company_existance.stdout == ""
+  args:
+    chdir: /home/vagrant/shirasagi
+- shell: |
+    mongo --quiet --eval 'db.ss_sites.find({ host: "childcare" }, { host: 1 })' 127.0.0.1/ss | jq -r .host
+  register: site_childcare_existance
+  ignore_errors: yes
+  args:
+    chdir: /home/vagrant/shirasagi
+- name: 'create site "子育て支援サンプル"'
+  shell: |
+    /home/vagrant/.rvm/wrappers/ruby-{{ruby_version}}/bundle exec rake ss:create_site data='{ name: "子育て支援サンプル", host: "childcare", domains: "childcare.example.jp:3000 192.168.33.11:3000", map_api: "openlayers" }'
+  when: site_childcare_existance.stdout == ""
+  args:
+    chdir: /home/vagrant/shirasagi
+- shell: |
+    mongo --quiet --eval 'db.ss_sites.find({ host: "opendata" }, { host: 1 })' 127.0.0.1/ss | jq -r .host
+  register: site_opendata_existance
+  ignore_errors: yes
+  args:
+    chdir: /home/vagrant/shirasagi
+- name: 'create site "オープンデータサンプル"'
+  shell: |
+    /home/vagrant/.rvm/wrappers/ruby-{{ruby_version}}/bundle exec rake ss:create_site data='{ name: "オープンデータサンプル", host: "opendata", domains: "opendata.example.jp:3000 192.168.33.12:3000", map_api: "openlayers" }'
+  when: site_opendata_existance.stdout == ""
+  args:
+    chdir: /home/vagrant/shirasagi
+- shell: |
+    mongo --quiet --eval 'db.ss_sites.find({ host: "lp_" }, { host: 1 })' 127.0.0.1/ss | jq -r .host
+  register: site_lp_existance
+  ignore_errors: yes
+  args:
+    chdir: /home/vagrant/shirasagi
+- name: 'create site "LPサンプル"'
+  shell: |
+    /home/vagrant/.rvm/wrappers/ruby-{{ruby_version}}/bundle exec rake ss:create_site data='{ name: "LPサンプル", host: "lp_", domains: "lp.example.jp:3000 192.168.33.13:3000", map_api: "openlayers" }'
+  when: site_lp_existance.stdout == ""
+  args:
+    chdir: /home/vagrant/shirasagi
+- shell: |
+    site_id=$(mongo --quiet --eval 'db.ss_sites.find({ host: "www" }, { _id: 1 })' 127.0.0.1/ss | jq -r ._id)
+    mongo --quiet --eval "db.cms_pages.find({ site_id: $site_id, filename: 'index.html' }, { filename: 1 })" 127.0.0.1/ss | jq ._id
+  register: site_www_page_existance
+  ignore_errors: yes
+  args:
+    chdir: /home/vagrant/shirasagi
+- name: 'install seeds to "自治体サンプル"'
+  shell: |
+    /home/vagrant/.rvm/wrappers/ruby-{{ruby_version}}/bundle exec rake db:seed name=demo site=www
+  when: site_www_page_existance.stdout == ""
+  args:
+    chdir: /home/vagrant/shirasagi
+- shell: |
+    site_id=$(mongo --quiet --eval 'db.ss_sites.find({ host: "company" }, { _id: 1 })' 127.0.0.1/ss | jq -r ._id)
+    mongo --quiet --eval "db.cms_pages.find({ site_id: $site_id, filename: 'index.html' }, { filename: 1 })" 127.0.0.1/ss | jq ._id
+  register: site_company_page_existance
+  ignore_errors: yes
+  args:
+    chdir: /home/vagrant/shirasagi
+- name: 'install seeds to "企業サンプル"'
+  shell: |
+    /home/vagrant/.rvm/wrappers/ruby-{{ruby_version}}/bundle exec rake db:seed name=company site=company
+  when: site_company_page_existance.stdout == ""
+  args:
+    chdir: /home/vagrant/shirasagi
+- shell: |
+    site_id=$(mongo --quiet --eval 'db.ss_sites.find({ host: "childcare" }, { _id: 1 })' 127.0.0.1/ss | jq -r ._id)
+    mongo --quiet --eval "db.cms_pages.find({ site_id: $site_id, filename: 'index.html' }, { filename: 1 })" 127.0.0.1/ss | jq ._id
+  register: site_childcare_page_existance
+  ignore_errors: yes
+  args:
+    chdir: /home/vagrant/shirasagi
+- name: 'install seeds to "子育て支援サンプル"'
+  shell: |
+    /home/vagrant/.rvm/wrappers/ruby-{{ruby_version}}/bundle exec rake db:seed name=childcare site=childcare
+  when: site_childcare_page_existance.stdout == ""
+  args:
+    chdir: /home/vagrant/shirasagi
+- shell: |
+    site_id=$(mongo --quiet --eval 'db.ss_sites.find({ host: "opendata" }, { _id: 1 })' 127.0.0.1/ss | jq -r ._id)
+    mongo --quiet --eval "db.cms_pages.find({ site_id: $site_id, filename: 'index.html' }, { filename: 1 })" 127.0.0.1/ss | jq ._id
+  register: site_opendata_page_existance
+  ignore_errors: yes
+  args:
+    chdir: /home/vagrant/shirasagi
+- name: 'install seeds to "オープンデータサンプル"'
+  shell: |
+    /home/vagrant/.rvm/wrappers/ruby-{{ruby_version}}/bundle exec rake db:seed name=opendata site=opendata
+  when: site_opendata_page_existance.stdout == ""
+  args:
+    chdir: /home/vagrant/shirasagi
+- shell: |
+    site_id=$(mongo --quiet --eval 'db.ss_sites.find({ host: "lp_" }, { _id: 1 })' 127.0.0.1/ss | jq -r ._id)
+    mongo --quiet --eval "db.cms_pages.find({ site_id: $site_id, filename: 'index.html' }, { filename: 1 })" 127.0.0.1/ss | jq ._id
+  register: site_lp_page_existance
+  ignore_errors: yes
+  args:
+    chdir: /home/vagrant/shirasagi
+- name: 'install seeds to "LPサンプル"'
+  shell: |
+    /home/vagrant/.rvm/wrappers/ruby-{{ruby_version}}/bundle exec rake db:seed name=lp site=lp_
+  when: site_lp_page_existance.stdout == ""
+  args:
+    chdir: /home/vagrant/shirasagi
+- shell: |
+    mongo --quiet --eval 'db.ss_groups.find({ name: "アオサギ市" }, { name: 1 })' 127.0.0.1/ss | jq -r .name
+  register: gws_seeds_existance
+  ignore_errors: yes
+  args:
+    chdir: /home/vagrant/shirasagi
+- name: 'install seeds to "GWS"'
+  shell: |
+    /home/vagrant/.rvm/wrappers/ruby-{{ruby_version}}/bundle exec rake db:seed name=gws
+  when: gws_seeds_existance.stdout == ''
+  args:
+    chdir: /home/vagrant/shirasagi
+- name: generate nodes and pages
+  shell: |
+    /home/vagrant/.rvm/wrappers/ruby-{{ruby_version}}/bundle exec rake cms:generate_nodes
+    /home/vagrant/.rvm/wrappers/ruby-{{ruby_version}}/bundle exec rake cms:generate_pages
+  args:
+    chdir: /home/vagrant/shirasagi
