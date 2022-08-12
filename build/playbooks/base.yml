@@ -1,43 +1,4 @@
-- name: Disable SELinux
-  selinux:
-    state: disabled
-  become: yes
-- name: yum update
-  yum:
-    name: '*'
-    state: latest
-  become: yes
-- name: disable requiretty in sudo
-  lineinfile:
-    path: /etc/sudoers
-    regexp: '^(Defaults\s+requiretty)$'
-    line: '# \1'
-    backrefs: yes
-  become: yes
-- name: install epel-release
-  yum:
-    name:
-      - epel-release
-  become: yes
-- name: install prerequisities
-  yum:
-    name:
-      - gcc
-      - gcc-c++
-      - git
-      - ImageMagick
-      - jq
-      - kernel-devel-{{ansible_kernel}}
-      - make
-      - openssl
-      - openssl-devel
-      - p7zip
-      - readline
-      - readline-devel
-      - sox
-      - tree
-      - wget
-      - zlib
-      - zlib-devel
-    state: present
-  become: yes
+- include_tasks: playbooks/base_armalinux.yml
+  when: ansible_distribution == "AlmaLinux"
+- include_tasks: playbooks/base_ubuntu.yml
+  when: ansible_distribution == "Ubuntu"

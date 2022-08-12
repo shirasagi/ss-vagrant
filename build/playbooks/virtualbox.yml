@@ -1,6 +1,7 @@
 - name: get VirtualBox version
   shell: cat /home/vagrant/.vbox_version
   register: vbox_version
+  ignore_errors: true
 - name: install VirtualBox Guest Additions
   shell: |
     wget http://download.virtualbox.org/virtualbox/{{ vbox_version.stdout }}/VBoxGuestAdditions_{{ vbox_version.stdout }}.iso
@@ -12,3 +13,4 @@
   args:
     chdir: /tmp
     creates: /opt/VBoxGuestAdditions-{{ vbox_version.stdout }}/init/vboxadd
+  when: vbox_version.rc == 0

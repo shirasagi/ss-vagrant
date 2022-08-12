@@ -1,13 +1,37 @@
-- name: setup mongodb repo
+- name: setup mongodb repo (yum)
   copy:
-    src: mongodb-org-4.4.repo
+    src: fixtures/mongodb-org-4.4.repo
     dest: /etc/yum.repos.d/mongodb-org-4.4.repo
     owner: root
   become: yes
-- name: install mongodb
+  when: ansible_distribution == "AlmaLinux"
+- name: install mongodb (yum)
   yum:
     name: mongodb-org
+    state: present
   become: yes
+  when: ansible_distribution == "AlmaLinux"
+- name: setup mongodb repo (apt)
+  copy:
+    src: fixtures/mongodb-org-4.4-{{ ansible_distribution | lower }}-{{ ansible_distribution_version | lower }}.list
+    dest: /etc/apt/sources.list.d/mongodb-org-4.4.list
+    owner: root
+  become: yes
+  when: ansible_distribution == "Ubuntu"
+- name: install key (apt)
+  copy:
+    src: fixtures/mongodb-org-server-4.4.asc
+    dest: /usr/share/keyrings/mongodb-server-4.4.asc
+    owner: root
+  become: yes
+  when: ansible_distribution == "Ubuntu"
+- name: install mongodb (apt)
+  apt:
+    name: mongodb-org
+    update_cache: yes
+    state: present
+  become: yes
+  when: ansible_distribution == "Ubuntu"
 - name: start mongodb
   service:
     name: mongod

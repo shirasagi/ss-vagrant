@@ -29,6 +29,10 @@
     chdir: /usr/local/src/hts_engine_API-1.08
     creates: /usr/local/lib/libHTSEngine.a
   become: yes
+  register: hts_engin_api_install
+- shell: ldconfig
+  become: yes
+  when: hts_engin_api_install.changed
 - name: download open_jtalk-1.07
   shell: wget -O open_jtalk-1.07.tar.gz http://downloads.sourceforge.net/open-jtalk/open_jtalk-1.07.tar.gz
   args:
@@ -55,6 +59,10 @@
     chdir: /usr/local/src/open_jtalk-1.07
     creates: /usr/local/bin/open_jtalk
   become: yes
+  register: open_jtalk_install
+- shell: ldconfig
+  become: yes
+  when: open_jtalk_install.changed
 - name: download lame-3.99.5
   shell: wget -O lame-3.99.5.tar.gz http://downloads.sourceforge.net/lame/lame-3.99.5.tar.gz
   args:
@@ -81,3 +89,7 @@
     chdir: /usr/local/src/lame-3.99.5
     creates: /usr/local/bin/lame
   become: yes
+  register: lame_install
+- shell: ldconfig
+  become: yes
+  when: lame_install.changed

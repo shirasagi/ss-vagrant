@@ -29,6 +29,10 @@
     chdir: /usr/local/src/mecab-0.996
     creates: /usr/local/bin/mecab
   become: yes
+  register: mecab_install
+- shell: ldconfig
+  become: yes
+  when: mecab_install.changed
 - name: download mecab-ipadic-2.7.0-20070801
   shell: wget -O mecab-ipadic-2.7.0-20070801.tar.gz 'https://drive.google.com/uc?id=0B4y35FiV1wh7MWVlSDBCSXZMTXM&authuser=0&export=download'
   args:

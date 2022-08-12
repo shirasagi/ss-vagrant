@@ -10,3 +10,6 @@
     - include_tasks: playbooks/mongo.yml
     - include_tasks: playbooks/ruby.yml
     - include_tasks: playbooks/shirasagi.yml
+    - shell: apt clean
+      become: yes
+      when: ansible_distribution == "Ubuntu"

@@ -5,13 +5,27 @@
     repo: https://github.com/shirasagi/shirasagi
     dest: /home/vagrant/shirasagi
     version: "{{shirasagi_version}}"
-- name: bundle install
-  shell: /home/vagrant/.rvm/wrappers/ruby-{{ruby_version}}/bundle install --without development test
+- name: configure bundle
+  shell: /home/vagrant/.rvm/wrappers/ruby-{{ruby_version}}/bundle config set without 'development test'
   args:
     chdir: /home/vagrant/shirasagi
-    creates: "/home/vagrant/shirasagi/.bundle/config"
+    creates: /home/vagrant/shirasagi/.bundle/config
+- name: bundle install
+  shell: |
+    for i in $(seq 1 5)
+    do
+      /home/vagrant/.rvm/wrappers/ruby-{{ruby_version}}/bundle install
+      if [ $? -eq 0 ]; then
+        break
+      fi
+    done
+  args:
+    chdir: /home/vagrant/shirasagi
+  async: 3600
+  poll: 10
 - name: copy sample configurations
-  shell: cp -n config/samples/{mongoid.yml,unicorn.rb} config/
+  shell: |
+    /bin/bash -lc "cp -n config/samples/{mongoid.yml,unicorn.rb} config/"
   args:
     chdir: /home/vagrant/shirasagi
     creates: /home/vagrant/shirasagi/config/unicorn.rb
@@ -119,6 +133,8 @@
   when: site_www_page_existance.stdout == ""
   args:
     chdir: /home/vagrant/shirasagi
+  async: 3600
+  poll: 10
 - shell: |
     site_id=$(mongo --quiet --eval 'db.ss_sites.find({ host: "company" }, { _id: 1 })' 127.0.0.1/ss | jq -r ._id)
     mongo --quiet --eval "db.cms_pages.find({ site_id: $site_id, filename: 'index.html' }, { filename: 1 })" 127.0.0.1/ss | jq ._id
@@ -183,9 +199,13 @@
   when: gws_seeds_existance.stdout == ''
   args:
     chdir: /home/vagrant/shirasagi
+  async: 3600
+  poll: 10
 - name: generate nodes and pages
   shell: |
     /home/vagrant/.rvm/wrappers/ruby-{{ruby_version}}/bundle exec rake cms:generate_nodes
     /home/vagrant/.rvm/wrappers/ruby-{{ruby_version}}/bundle exec rake cms:generate_pages
   args:
     chdir: /home/vagrant/shirasagi
+  async: 3600
+  poll: 10

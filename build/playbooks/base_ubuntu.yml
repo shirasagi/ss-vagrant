@@ -1,0 +1,45 @@
+- shell: test -f /etc/selinux/config
+  register: selinux_config_existance
+  ignore_errors: yes
+- name: Disable SELinux
+  lineinfile:
+    path: /etc/selinux/config
+    regexp: 'SELINUX=disabled'
+    line: 'SELINUX=disabled'
+    backrefs: no
+  become: yes
+  when: selinux_config_existance.rc == 0
+- name: apt update & upgrade
+  apt:
+    name: "*"
+    update_cache: yes
+    state: latest
+  become: yes
+- name: disable requiretty in sudo
+  lineinfile:
+    path: /etc/sudoers
+    regexp: '^(Defaults\s+requiretty)$'
+    line: '# \1'
+    backrefs: yes
+  become: yes
+- name: install prerequisities
+  package:
+    name:
+      - gcc
+      - cpp
+      - git
+      - imagemagick
+      - jq
+      - linux-headers-{{ansible_kernel}}
+      - make
+      - openssl
+      - p7zip
+      - sox
+      - tree
+      - wget
+    state: present
+  become: yes
+  register: apt_packages
+- shell: ldconfig
+  become: yes
+  when: apt_packages.changed

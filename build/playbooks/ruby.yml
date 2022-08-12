@@ -1,30 +1,33 @@
 - name: create .gemrc
   copy:
-    src: dot.gemrc
+    src: fixtures/dot.gemrc
     dest: /home/vagrant/.gemrc
-- shell: gpg2 --list-keys | fgrep 409B6B1796C275462A1703113804BB82D39DC0E3
+- shell: gpg --list-keys | fgrep 409B6B1796C275462A1703113804BB82D39DC0E3
   register: _test_key_3804BB82D39DC0E3
   ignore_errors: yes
 - name: install gpg key 3804BB82D39DC0E3
   shell: |
-    curl -sSL https://rvm.io/mpapis.asc | gpg2 --import -
+    curl -sSL https://rvm.io/mpapis.asc | gpg --import -
   when: _test_key_3804BB82D39DC0E3.rc != 0
-- shell: gpg2 --list-keys | fgrep 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
+- shell: gpg --list-keys | fgrep 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
   register: _test_key_105BD0E739499BDB
   ignore_errors: yes
 - name: install gpg key 105BD0E739499BDB
   shell: |
-    curl -sSL https://rvm.io/pkuczynski.asc | gpg2 --import -
+    curl -sSL https://rvm.io/pkuczynski.asc | gpg --import -
   when: _test_key_105BD0E739499BDB.rc != 0
 - name: install rvm
   shell: curl -sSL https://get.rvm.io | bash
   args:
     creates: /home/vagrant/.rvm/LICENSE
 - name: install ruby
-  shell: rvm install {{ruby_version}} --disable-binary
+  shell: |
+    /bin/bash -lc "rvm install {{ruby_version}} --disable-binary"
   args:
+    chdir: /home/vagrant
     creates: /home/vagrant/.rvm/rubies/ruby-{{ruby_version}}/bin/ruby
 - name: set default ruby
-  shell: rvm alias create default {{ruby_version}}
+  shell: |
+    /bin/bash -lc "rvm alias create default {{ruby_version}}"
   args:
     creates: /home/vagrant/.rvm/rubies/default/bin/ruby
