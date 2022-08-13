@@ -1,0 +1,13 @@
+- name: install jre (yum)
+  yum:
+    name: java-11-openjdk
+    state: latest
+  become: yes
+  when: ansible_distribution == "AlmaLinux"
+- name: install jre (apt)
+  apt:
+    name: default-jre
+    update_cache: yes
+    state: latest
+  become: yes
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "Debian"

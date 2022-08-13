@@ -3,12 +3,16 @@
   vars:
     ruby_series: 2.7.0
     ruby_version: 2.7.5
+    node_version: v16.16.0
     shirasagi_version: stable
   tasks:
     - include_tasks: playbooks/base.yml
     - include_tasks: playbooks/virtualbox.yml
     - include_tasks: playbooks/mongo.yml
     - include_tasks: playbooks/ruby.yml
+    - include_tasks: playbooks/node.yml
+    - include_tasks: playbooks/java.yml
+    - include_tasks: playbooks/chrome.yml
     - include_tasks: playbooks/shirasagi.yml
     - shell: apt clean
       become: yes

@@ -1,5 +1,6 @@
 - include_tasks: mecab.yml
 - include_tasks: open_jtalk.yml
+- include_tasks: michecker.yml
 - name: clone shirasagi
   git:
     repo: https://github.com/shirasagi/shirasagi
@@ -51,6 +52,12 @@
   args:
     chdir: /home/vagrant/shirasagi
     creates: /home/vagrant/shirasagi/config/voice.yml
+- name: enable michecker
+  shell: |
+    sed -e "s#disable: true#disable: false#" config/defaults/michecker.yml > config/michecker.yml
+  args:
+    chdir: /home/vagrant/shirasagi
+    creates: /home/vagrant/shirasagi/config/michecker.yml
 - shell: |
     mongo --quiet --eval 'db.adminCommand({ listDatabases: 1 })' 127.0.0.1 | jq -r '.databases | map(select(.name == "ss")) | .[].name'
   args:

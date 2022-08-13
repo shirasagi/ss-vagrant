@@ -1,0 +1,30 @@
+- name: setup google-chrome repo (yum)
+  copy:
+    src: fixtures/google-chrome.repo
+    dest: /etc/yum.repos.d/google-chrome.repo
+    owner: root
+  become: yes
+  when: ansible_distribution == "AlmaLinux"
+- name: install chromium browser (yum)
+  yum:
+    name:
+      - google-chrome-stable
+      - google-noto-sans-cjk-ttc-fonts
+    state: latest
+  become: yes
+  when: ansible_distribution == "AlmaLinux"
+  register: yum_chrome_install
+- name: install chromium browser (apt)
+  apt:
+    name:
+      - chromium-browser
+      - fonts-noto-cjk
+    update_cache: yes
+    state: latest
+  become: yes
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "Debian"
+  register: apt_chrome_install
+- name: rebuild font cache
+  shell: fc-cache -f
+  become: yes
+  when: yum_chrome_install.changed or apt_chrome_install.changed

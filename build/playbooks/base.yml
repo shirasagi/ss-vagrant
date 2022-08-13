@@ -1,4 +1,4 @@
-- include_tasks: playbooks/base_armalinux.yml
+- include_tasks: playbooks/base_almalinux.yml
   when: ansible_distribution == "AlmaLinux"
 - include_tasks: playbooks/base_ubuntu.yml
   when: ansible_distribution == "Ubuntu" or ansible_distribution == "Debian"

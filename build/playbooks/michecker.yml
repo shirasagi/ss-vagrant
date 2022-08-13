@@ -1,0 +1,25 @@
+- name: change /usr/local/src permission
+  file:
+    path: /usr/local/src
+    mode: '0777'
+  become: yes
+- name: download michecker
+  shell: wget -qO michecker.tar.bz2 "https://github.com/shirasagi/docker-michecker/blob/main/assets/michecker.tar.bz2?raw=true"
+  args:
+    chdir: /usr/local/src
+    creates: /usr/local/src/michecker.tar.bz2
+- name: extract michecker
+  shell: tar xvf /usr/local/src/michecker.tar.bz2 && chown -R root:root /opt/michecker
+  args:
+    chdir: /opt
+    creates: /opt/michecker
+  become: yes
+- name: detect java home
+  shell: dirname $(dirname $(readlink -f $(which java)))
+  register: java_home
+- name: set JAVA_HOME
+  lineinfile:
+    path: /opt/michecker/bin/michecker
+    insertafter: base_dir=.*
+    line: "JAVA_HOME=${JAVA_HOME:-{{ java_home.stdout }}}"
+  become: yes

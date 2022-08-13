@@ -1,0 +1,15 @@
+- name: install nvm
+  shell: |
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+  args:
+    creates: /home/vagrant/.nvm/nvm.sh
+- name: install node
+  shell: |
+    /bin/bash -lc "source ~/.nvm/nvm.sh && nvm install {{ node_version }} --latest-npm && nvm alias default {{ node_version }}"
+  args:
+    creates: /home/vagrant/.nvm/versions/node/{{ node_version }}/bin/node
+- name: install yarn
+  shell: |
+    /bin/bash -lc "source ~/.nvm/nvm.sh && npm install --global yarn"
+  args:
+    creates: "/home/vagrant/.nvm/versions/node/{{ node_version }}/bin/yarn"
