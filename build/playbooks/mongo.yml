@@ -17,21 +17,21 @@
     dest: /etc/apt/sources.list.d/mongodb-org-4.4.list
     owner: root
   become: yes
-  when: ansible_distribution == "Ubuntu"
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "Debian"
 - name: install key (apt)
   copy:
     src: fixtures/mongodb-org-server-4.4.asc
     dest: /usr/share/keyrings/mongodb-server-4.4.asc
     owner: root
   become: yes
-  when: ansible_distribution == "Ubuntu"
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "Debian"
 - name: install mongodb (apt)
   apt:
     name: mongodb-org
     update_cache: yes
     state: present
   become: yes
-  when: ansible_distribution == "Ubuntu"
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "Debian"
 - name: start mongodb
   service:
     name: mongod

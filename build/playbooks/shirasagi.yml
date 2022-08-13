@@ -12,13 +12,16 @@
     creates: /home/vagrant/shirasagi/.bundle/config
 - name: bundle install
   shell: |
+    last_code=0
     for i in $(seq 1 5)
     do
       /home/vagrant/.rvm/wrappers/ruby-{{ruby_version}}/bundle install
-      if [ $? -eq 0 ]; then
+      last_code=$?
+      if [ $last_code -eq 0 ]; then
         break
       fi
     done
+    exit $last_code
   args:
     chdir: /home/vagrant/shirasagi
   async: 3600

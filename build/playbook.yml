@@ -12,4 +12,4 @@
     - include_tasks: playbooks/shirasagi.yml
     - shell: apt clean
       become: yes
-      when: ansible_distribution == "Ubuntu"
+      when: ansible_distribution == "Ubuntu" or ansible_distribution == "Debian"
