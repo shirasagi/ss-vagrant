@@ -20,14 +20,6 @@ SHIRASAGI 開発用の Vagrant Box を使用するには次のいずれかの環
   * [ダウンロード](https://www.vagrantup.com/downloads.html) から各環境に応じたインストーラーをダウンロードし、インストーラーを実行してください。
   * インストーラー実行後は、インストーラーの指示にしたがってインストールを完了させてください。
 
-### 動作確認のとれた vagrant バージョン
-
-以下のバージョンの vagrant の動作確認が取れています。
-
-| vagrant バージョン | Virtual Box バージョン |動作                       | ダウンロード |
-|------------|------------------|---------------------------|----------|
-| 2.2.5      | 6.0.12 | Windows/Mac ともに OK                     |[Win 64bit](https://releases.hashicorp.com/vagrant/2.2.5/vagrant_2.2.5_x86_64.msi) / [Mac](https://releases.hashicorp.com/vagrant/2.2.5/vagrant_2.2.5_x86_64.dmg) |
-
 ## 使用方法
 
 ### シラサギの起動
@@ -38,10 +30,13 @@ SHIRASAGI 開発用の Vagrant Box を使用するには次のいずれかの環
     $ cd shirasagi-dev
     $ cat Vagrantfile
     Vagrant.configure(2) do |config|
-      config.vm.box = "ss-vagrant-v1.14.2"
-      config.vm.box_url = "https://github.com/shirasagi/ss-vagrant/releases/download/v1.14.2/ss-vagrant-virtualbox-x86_64.box"
+      config.vm.box = "shirasagi/shirasagi"
+      config.vm.box_version = "1.16.1"
       config.vm.network "forwarded_port", guest: 3000, host: 3000
-      config.vm.network "private_network", ip: "192.168.33.10"
+      config.vm.network "private_network", ip: "192.168.56.10"
+      config.vm.provider "virtualbox" do |vb|
+        vb.memory = "2048"
+      end
     end
 
 次のコマンドを実行してください。シラサギ開発環境が起動します。
@@ -83,19 +78,19 @@ hosts ファイルが開けましたら以下の一行を入力してくださ�
 Windows の方は [Tera Term](https://osdn.jp/projects/ttssh2/) などの SSH クライアントをインストールし、
 次の接続情報を使用してログインしてください。
 
-* host: 192.168.33.10
+* host: 192.168.56.10
 * port: 22
 * user: vagrant
 * password: vagrant
 
 次のようなプロンプトが表示されれば、シラサギ開発環境へのログインに成功しています。この画面では、コマンドの入力を待ち受けます。
 
-    [vagrant@localhost ~]$
+    vagrant@ubuntu-focal:~$
 
 `tree -L 2 /var/www` というコマンドを実行し、SHIRASAGI がインストールされていることを確認してみましょう。
 
-    [vagrant@localhost ~]$ tree -L 2 /var/www
-    /var/www
+    vagrant@ubuntu-focal:~$ tree -L 2 .
+    .
     └── shirasagi
         ├── Gemfile
         ├── Gemfile.lock
@@ -129,13 +124,13 @@ bundle exec unicorn_rails -c /var/www/shirasagi/config/unicorn.rb -E production 
 ブラウザで "http://localhost:3000/" にアクセスしてみましょう。
 次のような自治体サンプルサイトの画面が表示されれば成功です。
 
-| 自治体サンプル                       |
-|--------------------------------------|
-| ![企業サンプル](images/top-min.png)  |
+| 自治体サンプル                        |
+|---------------------------------------|
+| ![自治体サンプル](images/top-min.png) |
 
 ### 企業サンプルサイト
 
-ブラウザで "http://company.example.jp:3000" にアクセスしてみてください。
+ブラウザで "http://company.example.jp:3000/" にアクセスしてみてください。
 次のような企業サンプルサイトの画面が表示されるはずです。
 
 | 企業サンプル                             |
@@ -144,7 +139,7 @@ bundle exec unicorn_rails -c /var/www/shirasagi/config/unicorn.rb -E production 
 
 ### 子育て支援サンプルサイト
 
-ブラウザで "http://childcare.example.jp:3000" にアクセスしてみてください。
+ブラウザで "http://childcare.example.jp:3000/" にアクセスしてみてください。
 次のような子育て支援サンプルサイトの画面が表示されるはずです。
 
 | 子育て支援サンプル                              |
@@ -153,7 +148,7 @@ bundle exec unicorn_rails -c /var/www/shirasagi/config/unicorn.rb -E production 
 
 ### オープンデータサンプルサイト
 
-ブラウザで "http://opendata.example.jp:3000" にアクセスしてみてください。
+ブラウザで "http://opendata.example.jp:3000/" にアクセスしてみてください。
 次のようなオープンデータサンプルサイトの画面が表示されるはずです。
 
 | オープンデータ                                  |
@@ -162,7 +157,7 @@ bundle exec unicorn_rails -c /var/www/shirasagi/config/unicorn.rb -E production 
 
 ### LPサンプルサイト
 
-ブラウザで "http://lp.example.jp:3000" にアクセスしてみてください。
+ブラウザで "http://lp.example.jp:3000/" にアクセスしてみてください。
 次のようなLPサンプルサイトの画面が表示されるはずです。
 
 | LPサンプル                                  |
@@ -198,9 +193,6 @@ bundle exec unicorn_rails -c /var/www/shirasagi/config/unicorn.rb -E production 
 
 ### Windows
 
-* 32ビット版 Windows をご利用の方
-  * 残念ですがご利用いただけません。
-  * どうしてもという方は、[シラサギプロジェクト開発コミュニティ](https://www.facebook.com/groups/ssproj/)で質問してください。
 * お使いのパソコンが Intel VT/AMD-V に対応しているかどうかを確認します。
   [VirtualChecker](http://www.forest.impress.co.jp/library/software/virtualcheck/) をダウンロードし、実行してください。
   Enabled と表示されれば Intel VT/AMD-V が有効になっており、Vagrant を使用することができます。
@@ -294,34 +286,22 @@ bundle exec unicorn_rails -c /var/www/shirasagi/config/unicorn.rb -E production 
 
 ### Vagrant Box の中身
 
-* VirtualBox 6.0.0 r125813 Guest Addition
-* CentOS 7.7.1908 (2019-12-16 時点での最新)
-* MongoDB 3.4.14
-* RVM 1.29.4
-* Ruby 2.6.3p62
-* SHIRASAGI のソース一式 (v1.14.2)
+* Ubuntu Focal (2022-08-17 時点での最新)
+* MongoDB 4.4.15
+* RVM 1.29.12-next
+* Ruby 3.0.4p208
+* SHIRASAGI のソース一式 (v1.16.1)
 
 ### Vagrant Box のビルド方法
 
-[Packer](https://www.packer.io/) をインストールしてください。そして、次のコマンドでビルドできます。
+ローカルの環境に ansible をインストールしてください。そして、次のコマンドでビルドできます。
 
     $ git clone "https://github.com/shirasagi/ss-vagrant.git"
-    $ cd ss-vagrant/packer
-    $ packer build -only=virtualbox-iso template.json
+    $ cd ss-vagrant/build
+    $ vagrant up && vagrant package
 
-ビルドに成功すると `ss-vagrant-virtualbox-x86_64.box` ができます。
-ビルドには 20 分ぐらいかかります。
-
-### 32 ビット版 Vagrant Box のビルド方法
-
-GitHub には、合計 2GB までしかファイルをアップできないため、32 ビット版の提供を取りやめました。
-32 ビット版の Vagrant Box が必要な方は、ご自身でビルドしてください。
-
-[Packer](https://www.packer.io/) をインストールしてください。そして、次のコマンドでビルドできます。
-
-    $ git clone "https://github.com/shirasagi/ss-vagrant.git"
-    $ cd ss-vagrant/packer
-    $ packer build -only=virtualbox-iso -var-file=virtualbox-i386-variables.json template.json
+ビルドに成功すると `package.box` ができます。
+ビルドには 30 分ぐらいかかります。
 
 ## Windows の共有フォルダーを使った開発方法
 
