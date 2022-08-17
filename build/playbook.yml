@@ -1,8 +1,8 @@
 - name: Shirasagi Setup
   hosts: all
   vars:
-    ruby_series: 2.7.0
-    ruby_version: 2.7.5
+    ruby_series: 3.0.0
+    ruby_version: 3.0.4
     node_version: v16.16.0
     shirasagi_version: stable
   tasks:
