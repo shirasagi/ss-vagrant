@@ -7,8 +7,8 @@ brew install ansible
 And then run below commands:
 
 ~~~
-vagrant up
-vagrant box ...
+vagrant up && vagrant package
 ~~~
 
- So you can see vagrant box
+If the build process is succeeded, you can see `package.box` in the current directory.
+You can upload `package.box` to Vagrant Cloud with your browser to publish globally if you like.
