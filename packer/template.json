@@ -34,6 +34,7 @@
             "scripts/shirasagi.sh",
             "scripts/heroku.sh",
             "scripts/disable-firewall.sh",
+            "scripts/increase-max_user_watches.sh",
             "scripts/disable-ipv6.sh",
             "scripts/extra-package.sh",
             "scripts/cleanup.sh",
@@ -55,6 +56,7 @@
             "scripts/shirasagi.sh",
             "scripts/heroku.sh",
             "scripts/disable-firewall.sh",
+            "scripts/increase-max_user_watches.sh",
             "scripts/disable-ipv6.sh",
             "scripts/extra-package.sh",
             "scripts/cleanup.sh",
@@ -74,6 +76,7 @@
             "scripts/shirasagi.sh",
             "scripts/heroku.sh",
             "scripts/disable-firewall.sh",
+            "scripts/increase-max_user_watches.sh",
             "scripts/disable-ipv6.sh",
             "scripts/extra-package.sh",
             "scripts/cleanup.sh"
