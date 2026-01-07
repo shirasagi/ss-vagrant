@@ -7,9 +7,8 @@ SHIRASAGI 開発用の Vagrant Box を公開します。
 
 SHIRASAGI 開発用の Vagrant Box を使用するには次のいずれかの環境が必要です。
 
-* 64ビット Windows
-* Mac
-* 64ビット Ubuntu / RedHat / CentOS / 他 Linux 全般
+* x86_64 Windows
+* x86_64ビット Ubuntu / RedHat / CentOS / 他 Linux 全般
 
 事前に VirtualBox と Vagrant をインストールしてください。
 
@@ -31,7 +30,7 @@ SHIRASAGI 開発用の Vagrant Box を使用するには次のいずれかの環
     $ cat Vagrantfile
     Vagrant.configure(2) do |config|
       config.vm.box = "shirasagi/shirasagi"
-      config.vm.box_version = "1.16.1"
+      config.vm.box_version = "1.20.2"
       config.vm.network "forwarded_port", guest: 3000, host: 3000
       config.vm.network "private_network", ip: "192.168.56.10"
       config.vm.provider "virtualbox" do |vb|
@@ -45,6 +44,11 @@ SHIRASAGI 開発用の Vagrant Box を使用するには次のいずれかの環
 
 `vagrant up` コマンドは 10 分から 20 分ぐらいかかるので、コーヒーでも飲みながら待ってください。
 `vagrant up` コマンドが失敗した場合、<a href="#vagrant-%E3%81%8C%E8%B5%B7%E5%8B%95%E3%81%97%E3%81%AA%E3%81%84%E5%A0%B4%E5%90%88">Vagrant が起動しない場合</a>を参考にして問題を解決してください。
+`vagrant up` コマンド中 failed to create the raw output file が表示された場合、シリアルポート接続の設定を上書きして、切断状態にすることで正常に起動します。
+
+    config.vm.provider "virtualbox" do |vb|
+      vb.customize [ "modifyvm", :id, "--uartmode1", "disconnected" ]
+    end
 
 ### hosts ファイルの設定
 
@@ -58,10 +62,10 @@ Windows の hosts ファイルは以下にあります。
 
       C:\Windows\System32\drivers\etc\hosts
 
-Mac の hosts ファイルは以下にあります。
+Linux の hosts ファイルは以下にあります。
 編集には root 権限が必要です。
 
-* Mac の hosts ファイル
+* Linux の hosts ファイル
 
       /etc/hosts
 
@@ -85,38 +89,45 @@ Windows の方は [Tera Term](https://osdn.jp/projects/ttssh2/) などの SSH �
 
 次のようなプロンプトが表示されれば、シラサギ開発環境へのログインに成功しています。この画面では、コマンドの入力を待ち受けます。
 
-    vagrant@ubuntu-focal:~$
+    vagrant@ubuntu-jammy:~$
 
-`tree -L 2 /var/www` というコマンドを実行し、SHIRASAGI がインストールされていることを確認してみましょう。
+`tree -L 2 /home/vagrant/shirasagi` というコマンドを実行し、SHIRASAGI がインストールされていることを確認してみましょう。
 
-    vagrant@ubuntu-focal:~$ tree -L 2 .
+    vagrant@ubuntu-jammy:~$ tree -L 1 /home/vagrant/shirasagi
     .
-    └── shirasagi
-        ├── Gemfile
-        ├── Gemfile.lock
-        ├── Guardfile
-        ├── MIT-LICENSE
-        ├── README.md
-        ├── Rakefile
-        ├── app
-        ├── bin
-        ├── config
-        ├── config.ru
-        ├── db
-        ├── lib
-        ├── log
-        ├── private
-        ├── public
-        ├── spec
-        ├── tmp
-        └── vendor
+    ├── Gemfile
+    ├── Gemfile.lock
+    ├── Guardfile
+    ├── MIT-LICENSE
+    ├── Procfile.dev
+    ├── README.md
+    ├── Rakefile
+    ├── app
+    ├── bin
+    ├── config
+    ├── config.ru
+    ├── db
+    ├── lib
+    ├── log
+    ├── package.json
+    ├── postcss.config.js
+    ├── private
+    ├── public
+    ├── spec
+    ├── stylelint.config.cjs
+    ├── tmp
+    ├── vendor
+    ├── webpack
+    ├── webpack.config.js
+    └── yarn.lock
 
-SHIRASAGI がインストールされていることを確認できたので、SHIRASAGI を起動してみましょう。
+SHIRASAGI がインストールされていることを確認できたので、SHIRASAGI を起動しているか確認してみましょう。
 
 ```sh
 $ cd $HOME/shirasagi
-$ bundle exec rake unicorn:start
-bundle exec unicorn_rails -c /var/www/shirasagi/config/unicorn.rb -E production -D
+$ systemctl status puma
+● puma.service - SHIRASAGI Puma Server
+     Loaded: loaded (/etc/systemd/system/puma.service; enabled; vendor preset: enabled)
 ```
 
 ### 自治体サンプルサイト
@@ -185,6 +196,8 @@ bundle exec unicorn_rails -c /var/www/shirasagi/config/unicorn.rb -E production 
 一般ユーザー   | user1      | user1@example.jp | pass
 一般ユーザー   | user2      | user2@example.jp | pass
 一般ユーザー   | user3      | user3@example.jp | pass
+一般ユーザー   | user4      | user4@example.jp | pass
+一般ユーザー   | user5      | user5@example.jp | pass
 
 以上で正しくシラサギ開発環境が起動しました。
 バリバリとシラサギをいじっていきましょう。
@@ -260,28 +273,6 @@ bundle exec unicorn_rails -c /var/www/shirasagi/config/unicorn.rb -E production 
 
 以上で問題が解決しない方は[シラサギプロジェクト開発コミュニティ](https://www.facebook.com/groups/ssproj/)で質問してください。
 
-### Mac
-
-* Intel ベースの Mac では、Intel VT は有効になっていますが、もし使用できない場合は https://support.apple.com/ja-jp/TS2744 を参照してください。
-* 次のように "Authentication failure" が繰り返し表示される場合、Vagrant を一つ前のバージョンに戻してみてください。
-
-  ```
-  > vagrant up default
-  ========= 省略 =========
-  ==> default: Booting VM...
-  ==> default: Waiting for machine to boot. This may take a few minutes...
-      default: SSH address: 127.0.0.1:2222
-      default: SSH username: vagrant
-      default: SSH auth method: private key
-      default: Warning: Connection timeout. Retrying...
-      default: Warning: Authentication failure. Retrying...
-      default: Warning: Authentication failure. Retrying...
-  ```
-
-* 他にもうまくいかない場合、Vagrant を一つ前のバージョンに戻してみてください。
-
-以上で問題が解決しない方は[シラサギプロジェクト開発コミュニティ](https://www.facebook.com/groups/ssproj/)で質問してください。
-
 ## Vagrant Box 詳細
 
 ### Vagrant Box の中身
@@ -309,8 +300,6 @@ Windows 版 Vagrant Box の共有ファイルは非常に遅く、Windows の共
 早くて快適にシラサギの開発をすすめることが出来ます。
 
 次にその手順を解説します。
-
-なお、Mac 版 Vagrant Box の共有ファイルは遅くはないので、そのままご利用ください。
 
 ### Windows の共有フォルダーの利用方法
 

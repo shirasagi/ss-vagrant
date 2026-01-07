@@ -1,0 +1,98 @@
+- name: Check if asdf is already installed
+  ansible.builtin.stat:
+    path: ~/.asdf
+  register: asdf_installed
+
+- name: Download asdf source
+  ansible.builtin.get_url:
+    url: "https://github.com/asdf-vm/asdf/releases/download/v0.18.0/asdf-v0.18.0-linux-amd64.tar.gz"
+    dest: /usr/local/src/asdf-v0.18.0-linux-amd64.tar.gz
+  become: true
+
+- name: Extract asdf tarball and install
+  ansible.builtin.unarchive:
+    src: /usr/local/src/asdf-v0.18.0-linux-amd64.tar.gz
+    dest: /usr/bin
+    remote_src: true
+  become: true
+
+- name: Add asdf to shell
+  ansible.builtin.shell: |
+    echo -e 'export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"' >> /home/vagrant/.bashrc
+  args:
+    executable: /bin/bash
+  when: not asdf_installed.stat.exists
+
+- name: Check if Ruby plugin is installed
+  command: asdf plugin list
+  register: ruby_plugin_check
+  changed_when: false
+
+- name: Install Ruby plugin if not installed
+  ansible.builtin.shell: |
+    asdf plugin add ruby https://github.com/asdf-vm/asdf-ruby.git
+  args:
+    executable: /bin/bash
+  when: "'ruby' not in ruby_plugin_check.stdout_lines"
+
+- name: Check if Ruby {{ ruby_version }} is installed
+  command: asdf list
+  register: ruby_check
+  changed_when: false
+
+- name: Install Ruby {{ ruby_version }} if not installed
+  ansible.builtin.shell: |
+    asdf install ruby {{ ruby_version }} && asdf set ruby {{ ruby_version }}
+  args:
+    executable: /bin/bash
+  when: ruby_version not in ruby_check.stdout
+
+# Node.js Plugin Management
+- name: Check if nodejs plugin is installed
+  command: asdf plugin list
+  register: nodejs_plugin_check
+  changed_when: false
+
+- name: Install nodejs plugin if not installed
+  ansible.builtin.shell: |
+    asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git
+  args:
+    executable: /bin/bash
+  when: "'nodejs' not in nodejs_plugin_check.stdout_lines"
+
+- name: Check if Node.js {{ node_version }} is installed
+  command: asdf list
+  register: nodejs_check
+  changed_when: false
+
+- name: Install Node.js {{ node_version }} if not installed
+  ansible.builtin.shell: |
+    asdf install nodejs {{ node_version }} && asdf set nodejs {{ node_version }}
+  args:
+    executable: /bin/bash
+  when: node_version not in nodejs_check.stdout
+
+# Yarn Plugin Management
+- name: Check if yarn plugin is installed
+  command: asdf plugin list
+  register: yarn_plugin_check
+  changed_when: false
+
+- name: Install yarn plugin if not installed
+  ansible.builtin.shell: |
+    asdf plugin add yarn
+  args:
+    executable: /bin/bash
+  when: "'yarn' not in yarn_plugin_check.stdout_lines"
+
+- name: Check if Yarn {{ yarn_version }} is installed
+  command: asdf list
+  register: yarn_check
+  changed_when: false
+
+- name: Install Yarn {{ yarn_version }} if not installed
+  ansible.builtin.shell: |
+    asdf install yarn {{ yarn_version }} && asdf set yarn {{ yarn_version }}
+  args:
+    executable: /bin/bash
+  when: yarn_version not in yarn_check.stdout
