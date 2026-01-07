@@ -26,17 +26,26 @@
   package:
     name:
       - gcc
+      - g++
       - cpp
-      - git
-      - imagemagick
       - jq
-      - linux-headers-{{ansible_kernel}}
       - make
-      - openssl
-      - p7zip
       - sox
       - tree
       - wget
+      - imagemagick
+      - libmagick++-dev
+      - sox
+      - libsox-dev
+      - lame
+      - libmp3lame-dev
+      - mecab
+      - libmecab-dev
+      - libyaml-dev
+      - mecab-ipadic-utf8
+      - open-jtalk
+      - open-jtalk-mecab-naist-jdic
+      - graphicsmagick
     state: present
   become: yes
   register: apt_packages

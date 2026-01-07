@@ -2,15 +2,16 @@
   hosts: all
   vars:
     ruby_series: 3.0.0
-    ruby_version: 3.0.4
-    node_version: v16.16.0
+    ruby_version: 3.3.9
+    node_version: 24.8.0
+    yarn_version: 1.22.22
+    mongo_version: 8.0
     shirasagi_version: stable
   tasks:
     - include_tasks: playbooks/base.yml
     - include_tasks: playbooks/virtualbox.yml
     - include_tasks: playbooks/mongo.yml
-    - include_tasks: playbooks/ruby.yml
-    - include_tasks: playbooks/node.yml
+    - include_tasks: playbooks/asdf.yml
     - include_tasks: playbooks/java.yml
     - include_tasks: playbooks/chrome.yml
     - include_tasks: playbooks/shirasagi.yml
